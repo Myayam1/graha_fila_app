@@ -7,6 +7,8 @@ class MyText extends StatelessWidget {
   final Color? textcolor;
   final FontWeight? fontWeight;
   final VoidCallback? onTap;
+  final int? maxLines;              
+  final TextOverflow? overflow;
 
   const MyText({
     super.key,
@@ -14,7 +16,9 @@ class MyText extends StatelessWidget {
     this.fontSize,
     this.textcolor,
     this.fontWeight,
-    this.onTap, 
+    this.onTap,
+    this.maxLines,           
+    this.overflow,
   });
 
   @override
@@ -28,6 +32,8 @@ class MyText extends StatelessWidget {
           color: textcolor,
           fontWeight: fontWeight,
         ),
+        maxLines: maxLines,  
+        overflow: overflow,
       ),
     );
   }
