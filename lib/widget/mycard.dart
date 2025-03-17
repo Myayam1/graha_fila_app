@@ -27,16 +27,20 @@ class Mycard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap, // Defaultnya off jika null
+      onTap: onTap,
       child: Container(
-        width: width ?? 100.0,
-        height: height ?? 100.0,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           color: color ?? Colors.white,
           borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
-          border: (hasOutline ?? false)
-              ? Border.all(color: outlineColor ?? Colors.black, width: outlineWidth ?? 1.5)
-              : null,
+          border:
+              (hasOutline ?? false)
+                  ? Border.all(
+                    color: outlineColor ?? Colors.black,
+                    width: outlineWidth ?? 1.5,
+                  )
+                  : null,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -47,7 +51,7 @@ class Mycard extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
-          child: child ?? SizedBox.shrink(),
+          child: child ?? const SizedBox.shrink(),
         ),
       ),
     );
