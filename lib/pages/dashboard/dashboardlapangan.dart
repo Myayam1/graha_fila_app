@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:grafil_app/pages/detail_lapangan/reservasilapangan1.dart';
+import 'package:grafil_app/pages/detail_lapangan/reservasilapangan2.dart';
+import 'package:grafil_app/pages/detail_lapangan/reservasilapangan3.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mycolor.dart';
@@ -192,17 +195,32 @@ class DashboardLapanganPage extends StatelessWidget {
                           children: [
                             MyImageButton(
                               imagePath: "assets/images/logolapangan1.png",
-                              onTap: () {},
+                              onTap: () {
+                            Navigator.push(
+                             context,
+                              MaterialPageRoute(builder: (context) => const Reservasilapangan1()),
+
+                             ); },
                             ),
                             const SizedBox(height: 40),
                             MyImageButton(
                               imagePath: "assets/images/logolapangan2.png",
-                              onTap: () {},
+                              onTap: () {Navigator.push(
+                             context,
+                              MaterialPageRoute(builder: (context) => const ReservasiLapangan2()),
+
+                             ); },
                             ),
                             const SizedBox(height: 40),
                             MyImageButton(
                               imagePath: "assets/images/logolapangan3.png",
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                             context,
+                              MaterialPageRoute(builder: (context) => const ReservasiLapangan3()),
+
+                             ); 
+                              },
                             ),
                           ],
                         ),
