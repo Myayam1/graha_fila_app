@@ -10,6 +10,7 @@ class Mycard extends StatelessWidget {
   final double? outlineWidth;
   final Widget? child;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry? margin; // Tambahkan margin opsional
 
   const Mycard({
     Key? key,
@@ -22,6 +23,7 @@ class Mycard extends StatelessWidget {
     this.outlineWidth,
     this.child,
     this.onTap,
+    this.margin, // Tambahkan margin ke constructor
   }) : super(key: key);
 
   @override
@@ -31,16 +33,16 @@ class Mycard extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
+        margin: margin, // Gunakan margin opsional
         decoration: BoxDecoration(
           color: color ?? Colors.white,
           borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
-          border:
-              (hasOutline ?? false)
-                  ? Border.all(
-                    color: outlineColor ?? Colors.black,
-                    width: outlineWidth ?? 1.5,
-                  )
-                  : null,
+          border: (hasOutline ?? false)
+              ? Border.all(
+                  color: outlineColor ?? Colors.black,
+                  width: outlineWidth ?? 1.5,
+                )
+              : null,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
