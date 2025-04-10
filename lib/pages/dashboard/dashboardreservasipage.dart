@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mycolor.dart';
+import 'package:grafil_app/widget/myimgbtn.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
 import 'package:grafil_app/widget/mytext.dart';
 
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+class DashboardReservasiPage extends StatelessWidget {
+  const DashboardReservasiPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,67 +19,38 @@ class DashboardPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const MyText(
-                    text: 'Dashboard',
-                    fontSize: 24,
-                    textcolor: Mycolors.blue,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  MyButton(
-                    text: 'Reservasi',
-                    onPressed: () {},
-                    buttonbackgroundColor: Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 36,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 8,
-                    ),
-                    borderRadius: 28,
-                    icon: const Icon(
-                      Icons.add_circle_outline,
-                      color: Mycolors.white,
-                      size: 18,
-                    ),
-                    iconPosition: IconPosition.left,
-                  ),
-                ],
+              const MyText(
+                text: 'Dashboard',
+                fontSize: 24,
+                textcolor: Mycolors.blue,
+                fontWeight: FontWeight.w800,
               ),
+
               const SizedBox(height: 16),
 
-              // Sport Venue Card
               Mycard(
                 width: double.infinity,
                 borderRadius: 16,
                 child: Stack(
                   children: [
-                    // Card content
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Icon
                           Container(
                             width: 40,
                             height: 40,
-                              decoration: BoxDecoration(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: const ImageIcon(
                               AssetImage('assets/images/shuttlecock.png'),
                               color: Mycolors.blue,
-
                               size: 24,
                             ),
                           ),
                           const SizedBox(width: 16),
-                          // Venue details
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,15 +58,15 @@ class DashboardPage extends StatelessWidget {
                               children: [
                                 const MyText(
                                   text: 'Graha Fila Sport',
-                                  fontSize: 16,
+                                  fontSize: 17,
                                   textcolor: Mycolors.blue,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w800,
                                 ),
                                 const MyText(
                                   text: 'Badminton',
-                                  fontSize: 16,
+                                  fontSize: 17,
                                   textcolor: Mycolors.blue,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w800,
                                 ),
                                 const SizedBox(height: 8),
                                 Row(
@@ -103,12 +75,12 @@ class DashboardPage extends StatelessWidget {
                                   children: const [
                                     MyText(
                                       text: 'Pendapatan bulan ini',
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       textcolor: Colors.grey,
                                     ),
                                     MyText(
                                       text: 'Rp 135.000',
-                                      fontSize: 16,
+                                      fontSize: 17,
                                       textcolor: Mycolors.blue,
                                       fontWeight: FontWeight.w800,
                                     ),
@@ -120,7 +92,6 @@ class DashboardPage extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     Positioned(
                       top: 10,
                       right: 10,
@@ -149,19 +120,8 @@ class DashboardPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // Action Buttons
               Row(
                 children: [
-                  Expanded(
-                    child: MyButton(
-                      text: 'Reservasi',
-                      onPressed: () {},
-                      buttonbackgroundColor: Mycolors.blue,
-                      textColor: Mycolors.white,
-                      borderRadius: 28,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
                   Expanded(
                     child: MyButton(
                       text: 'Lapangan',
@@ -173,15 +133,53 @@ class DashboardPage extends StatelessWidget {
                       outlineColor: Mycolors.blue,
                     ),
                   ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: MyButton(
+                      text: 'Reservasi',
+                      onPressed: () {},
+                      buttonbackgroundColor: Mycolors.blue,
+                      textColor: Mycolors.white,
+                      borderRadius: 28,
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MyImageButton(
+                    imagePath: 'assets/images/logolapangan1.png',
+                    onTap: () {},
+                    width: 105,
+                    height: 100,
+                    borderRadius: 20,
+                  ),
+                  MyImageButton(
+                    imagePath: 'assets/images/logolapangan2.png',
+                    onTap: () {},
+                    width: 105,
+                    height: 100,
+                    borderRadius: 20,
+                  ),
+                  MyImageButton(
+                    imagePath: 'assets/images/logolapangan3.png',
+                    onTap: () {},
+                    width: 105,
+                    height: 100,
+                    borderRadius: 20,
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.43,
 
-              // Scrollable Reservation List
-              Expanded(
                 child: Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Mycolors.white,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
@@ -191,39 +189,43 @@ class DashboardPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(14),
                   child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 6,
+                    ),
+
+                    children: const [
                       ReservationCard(
                         waktu: '08:00-09:00',
                         tanggal: '03/07/24',
                         nama: 'Supri',
-                        lapangan: '1',
+                        lapangan: '2',
                         telp: '088837823323',
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 14),
                       ReservationCard(
                         waktu: '08:00-09:00',
                         tanggal: '03/07/24',
                         nama: 'Rusli',
-                        lapangan: '1',
+                        lapangan: '2',
                         telp: '088837823323',
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 14),
                       ReservationCard(
                         waktu: '08:00-09:00',
                         tanggal: '03/07/24',
                         nama: 'Anto',
-                        lapangan: '1',
+                        lapangan: '2',
                         telp: '088837823323',
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 14),
                       ReservationCard(
                         waktu: '08:00-09:00',
                         tanggal: '03/07/24',
                         nama: 'Dimas',
-                        lapangan: '1',
+                        lapangan: '2',
                         telp: '088837823323',
                       ),
                     ],
