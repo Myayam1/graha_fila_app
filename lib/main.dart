@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:grafil_app/pages/dashboard/dashboardlapangan.dart';
 import 'package:grafil_app/pages/dashboard/dashboardreservasipage.dart';
-import 'package:grafil_app/pages/riwayat/pageriwayatreservasi.dart';
+import 'package:grafil_app/pages/login/loginpage.dart';
+import 'package:grafil_app/pages/reservasi/addreservasipage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +12,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        home: RiwayatReservasi(),
-    
+        home: AddReservationPage(),
     );
   }
 }

@@ -14,6 +14,8 @@ class MyTextField extends StatefulWidget {
   final double width;
   final double height;
   final double borderRadius;
+  final Color? textcolor;
+  final FontWeight? fontWeight;
   final TextStyle? textStyle;
   final TextStyle? hintTextStyle;
   final EdgeInsetsGeometry? margin;
@@ -27,6 +29,8 @@ class MyTextField extends StatefulWidget {
     this.iconlogo,
     this.suffixIcon,
     this.iconColor,
+    this.textcolor,
+    this.fontWeight,
     required this.width,
     required this.height,
     required this.borderRadius,
@@ -64,7 +68,11 @@ class _MyTextFieldState extends State<MyTextField> {
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
           obscureText: widget.obscureText,
-          style: widget.textStyle ?? GoogleFonts.montserrat(color: Colors.black),
+          style: widget.textStyle ?? GoogleFonts.montserrat(
+                color: widget.textcolor ?? Colors.black,
+                fontSize: 14,
+                fontWeight: widget.fontWeight ?? FontWeight.normal
+          ),
           readOnly: widget.isDatePicker,
           onTap: widget.isDatePicker
               ? () async {
@@ -107,9 +115,9 @@ class _MyTextFieldState extends State<MyTextField> {
             hintText: widget.hintText,
             hintStyle: widget.hintTextStyle ??
                 GoogleFonts.montserrat(
-                  color: Colors.black.withOpacity(0.6),
+                  color: widget.textcolor ?? Colors.black,
                   fontSize: 14,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: widget.fontWeight ?? FontWeight.normal
                 ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
