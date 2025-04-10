@@ -118,7 +118,6 @@ class _MyTextFieldState extends State<MyTextField> {
                   color: widget.textcolor ?? Colors.black,
                   fontSize: 14,
                   fontWeight: widget.fontWeight ?? FontWeight.normal
-                  
                 ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
