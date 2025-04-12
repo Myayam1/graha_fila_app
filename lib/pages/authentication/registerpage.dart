@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
@@ -76,22 +78,27 @@ class RegisterPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const MyText(
-                        text: "Sudah punya akun?",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
+                      Text(
+                        "Sudah punya akun? ",
+                        style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
-                      const SizedBox(width: 4),
-                      MyText(
-                        text: "Masuk sekarang",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        textcolor: Mycolors.blue,
+                      GestureDetector(
                         onTap: () {
                           
+                          Get.toNamed(
+                            AppRoutes.login,
+                          ); 
                         },
+                        child: Text(
+                          "Masuk sekarang",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),

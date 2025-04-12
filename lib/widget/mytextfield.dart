@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:intl/intl.dart';
 
-
 class MyTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? hintText;
@@ -20,6 +19,9 @@ class MyTextField extends StatefulWidget {
   final TextStyle? hintTextStyle;
   final EdgeInsetsGeometry? margin;
   final bool isDatePicker;
+  final bool? hasOutline;
+  final Color? outlineColor;
+  final double? outlineWidth;
 
   const MyTextField({
     super.key,
@@ -38,6 +40,9 @@ class MyTextField extends StatefulWidget {
     this.hintTextStyle,
     this.margin,
     this.isDatePicker = false,
+    this.hasOutline,
+    this.outlineColor,
+    this.outlineWidth,
   });
 
   @override
@@ -56,6 +61,14 @@ class _MyTextFieldState extends State<MyTextField> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(widget.borderRadius),
+        border:
+            (widget.hasOutline ?? false)
+                ? Border.all(
+                  color: widget.outlineColor ?? Mycolors.grey,
+                  width: widget.outlineWidth ?? 1.5,
+                )
+                : null,
+
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -68,59 +81,65 @@ class _MyTextFieldState extends State<MyTextField> {
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
           obscureText: widget.obscureText,
-          style: widget.textStyle ?? GoogleFonts.montserrat(
+          style:
+              widget.textStyle ??
+              GoogleFonts.montserrat(
                 color: widget.textcolor ?? Colors.black,
                 fontSize: 14,
-                fontWeight: widget.fontWeight ?? FontWeight.normal
-          ),
+                fontWeight: widget.fontWeight ?? FontWeight.normal,
+              ),
           readOnly: widget.isDatePicker,
-          onTap: widget.isDatePicker
-              ? () async {
-                  DateTime now = DateTime.now();
-                  DateTime initialDate = selectedDate ?? now;
+          onTap:
+              widget.isDatePicker
+                  ? () async {
+                    DateTime now = DateTime.now();
+                    DateTime initialDate = selectedDate ?? now;
 
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: initialDate,
-                    firstDate: now,
-                    lastDate: DateTime(2100),
-                    builder: (context, child) {
-                      return Theme(
-                        data: ThemeData(
-                          colorScheme: ColorScheme.light(
-                            primary: Mycolors.blue, 
-                            onPrimary: Mycolors.background, 
-                            onSurface: Mycolors.darkBlue, 
-                          ),
-                          textButtonTheme: TextButtonThemeData(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Mycolors.darkBlue, 
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: initialDate,
+                      firstDate: now,
+                      lastDate: DateTime(2100),
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData(
+                            colorScheme: ColorScheme.light(
+                              primary: Mycolors.blue,
+                              onPrimary: Mycolors.background,
+                              onSurface: Mycolors.darkBlue,
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Mycolors.darkBlue,
+                              ),
                             ),
                           ),
-                        ),
-                        child: child!,
-                      );
-                    },
-                  );
+                          child: child!,
+                        );
+                      },
+                    );
 
-                  if (pickedDate != null) {
-                    setState(() {
-                      selectedDate = pickedDate;
-                      widget.controller?.text = DateFormat('dd-MM-yyyy').format(pickedDate);
-                    });
+                    if (pickedDate != null) {
+                      setState(() {
+                        selectedDate = pickedDate;
+                        widget.controller?.text = DateFormat(
+                          'dd-MM-yyyy',
+                        ).format(pickedDate);
+                      });
+                    }
                   }
-                }
-              : null,
+                  : null,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: widget.hintTextStyle ??
+            hintStyle:
+                widget.hintTextStyle ??
                 GoogleFonts.montserrat(
                   color: widget.textcolor ?? Colors.black,
                   fontSize: 14,
-                  fontWeight: widget.fontWeight ?? FontWeight.normal
+                  fontWeight: widget.fontWeight ?? FontWeight.normal,
                 ),
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 13),
             prefixIcon: widget.iconlogo,
             suffixIcon: widget.suffixIcon,
           ),

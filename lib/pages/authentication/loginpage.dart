@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
@@ -9,18 +11,18 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-      backgroundColor:Mycolors.blue,
+    return Scaffold(
+      backgroundColor: Mycolors.blue,
       body: Column(
         children: [
           const SizedBox(height: 65),
           const MyText(
             text: "Hello!",
-            fontSize: 45,
+            fontSize: 55,
             fontWeight: FontWeight.w800,
             textcolor: Mycolors.white,
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 2),
           const MyText(
             text: "Selamat datang di Graha Fila Sport",
             fontSize: 20,
@@ -55,7 +57,7 @@ class LoginPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     borderRadius: 24,
-                    textStyle:TextStyle( fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
                   MyTextField(
@@ -65,19 +67,23 @@ class LoginPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     borderRadius: 24,
-                    textStyle:TextStyle(fontWeight: FontWeight.bold),
+                    textStyle: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Align(
                     alignment: Alignment.centerRight,
                     child: MyText(
                       text: "Lupa password?",
                       textcolor: Mycolors.blue,
-                      onTap: () {},
+                      onTap: () {
+                          Get.toNamed(
+                            AppRoutes.forgotPassword,
+                          ); 
+                        },
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  
+                  const SizedBox(height: 30),
+
                   MyButton(
                     text: "Masuk",
                     onPressed: () {},
@@ -87,36 +93,32 @@ class LoginPage extends StatelessWidget {
                     buttonbackgroundColor: Mycolors.blue,
                   ),
                   
-                 
-              
-                const SizedBox(height: 25),
+                  const SizedBox(height: 10),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Divider(
-                          color: Mycolors.grey, 
-                          thickness: 1, 
-                        ),
+                      Text(
+                        "Belum punya akun? ",
+                        style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: MyText(
-                          text: "Atau",
-                          textcolor: Mycolors.grey, 
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          color: Mycolors.grey,
-                          thickness: 1,
+                      GestureDetector(
+                        onTap: () {
+                          
+                          Get.toNamed(
+                            AppRoutes.register,
+                          ); 
+                        },
+                        child: Text(
+                          "Daftar sekarang",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 25),
-                  
-                  MyButton(text: "Login dengan google", onPressed: () {},borderRadius: 24,width: double.infinity,height: 50,isOutlined: true,outlineColor: Mycolors.grey,icon:Image.asset("assets/images/googlelogo.png",height: 27,),textColor: Colors.black,fontSize: 16,fontWeight: FontWeight.w500,),
-                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -124,6 +126,5 @@ class LoginPage extends StatelessWidget {
         ],
       ),
     );
-
   }
 }
