@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:grafil_app/pages/riwayat/riwayatlapangan1.dart';
-import 'package:grafil_app/pages/riwayat/riwayatlapangan2.dart';
-import 'package:grafil_app/pages/riwayat/riwayatlapangan3.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mybutton.dart';
@@ -48,12 +49,16 @@ class RiwayatReservasi extends StatelessWidget {
             children: [
               Expanded(
                 child: MyButton(
-                  text: 'Lapangan',
-                  onPressed: () {},
-                  buttonbackgroundColor: Mycolors.blue,
-                  textColor: Mycolors.white,
+                  text: 'Pendapatan',
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.pendapatanlap1);
+                  },
+                  buttonbackgroundColor: Mycolors.background,
+                  textColor: Mycolors.blue,
                   borderRadius: 28,
                   fontWeight: FontWeight.w600,
+                  isOutlined: true,
+                  outlineColor: Mycolors.blue,
                   margin: const EdgeInsets.only(right: 10, left: 10),
                 ),
               ),
@@ -61,11 +66,9 @@ class RiwayatReservasi extends StatelessWidget {
                 child: MyButton(
                   text: 'Reservasi',
                   onPressed: () {},
-                  buttonbackgroundColor: Mycolors.background,
-                  textColor: Mycolors.blue,
+                  buttonbackgroundColor: Mycolors.blue,
+                  textColor: Mycolors.white,
                   borderRadius: 28,
-                  isOutlined: true,
-                  outlineColor: Mycolors.blue,
                   fontWeight: FontWeight.w600,
                   margin: const EdgeInsets.only(right: 10, left: 10),
                 ),
@@ -87,12 +90,10 @@ class RiwayatReservasi extends StatelessWidget {
                   hasOutline: true,
                   outlineColor: Mycolors.blue,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  RiwayatReservasi1(),
-                      ),
-                    );
+                    Get.toNamed(
+                        AppRoutes.riwayatreservasi1
+                      );
+  
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -116,7 +117,6 @@ class RiwayatReservasi extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         const Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: Mycolors.blue,
@@ -133,12 +133,7 @@ class RiwayatReservasi extends StatelessWidget {
                   hasOutline: true,
                   outlineColor: Mycolors.blue,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  RiwayatReservasi2(),
-                      ),
-                    );
+                    Get.toNamed(AppRoutes.riwayatreservasi2);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -179,12 +174,7 @@ class RiwayatReservasi extends StatelessWidget {
                   hasOutline: true,
                   outlineColor: Mycolors.blue,
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  RiwayatReservasi3(),
-                      ),
-                    );
+                    Get.toNamed(AppRoutes.riwayatreservasi3);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -202,13 +192,12 @@ class RiwayatReservasi extends StatelessWidget {
                             ),
                             SizedBox(height: 10),
                             MyText(
-                              text: "Detail riwayat reservasi lapangan 3",
+                              text: "Detail riwayat reservasi lapangan 2",
                               textcolor: Mycolors.blue,
                               fontSize: 15,
                             ),
                           ],
                         ),
-
                         const Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: Mycolors.blue,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/myimgbtn.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
 
-class RiwayatReservasi1 extends StatelessWidget {
+class RiwayatReservasi3 extends StatelessWidget {
   final List<Map<String, String>> datareservasi = [
     {
       'waktu': '13:00 - 14:00 ',
@@ -35,8 +38,7 @@ class RiwayatReservasi1 extends StatelessWidget {
       'telp': '081212341444',
     },
   ];
-
-  RiwayatReservasi1({Key? key}) : super(key: key);
+  RiwayatReservasi3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +70,14 @@ class RiwayatReservasi1 extends StatelessWidget {
                         color: Mycolors.blue,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.toNamed(AppRoutes.pageRiwayat);
                       },
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  "Lapangan 1",
+                  "Lapangan 3",
                   style: TextStyle(
                     color: Mycolors.blue,
                     fontSize: 26,
@@ -98,7 +100,7 @@ class RiwayatReservasi1 extends StatelessWidget {
                     ],
                   ),
                   child: MyImageButton(
-                    imagePath: 'assets/images/logolapangan1.png',
+                    imagePath: 'assets/images/logolapangan3.png',
                     onTap: () {},
                     width: 250,
                     height: 150,
@@ -132,7 +134,10 @@ class RiwayatReservasi1 extends StatelessWidget {
                           Expanded(
                             child: MyTextField(
                               hintText: "Search",
-                              iconlogo: const Icon(Icons.search,color: Mycolors.blue,),
+                              iconlogo: const Icon(
+                                Icons.search,
+                                color: Mycolors.blue,
+                              ),
                               width: double.infinity,
                               height: 50,
                               borderRadius: 24,

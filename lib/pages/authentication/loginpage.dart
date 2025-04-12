@@ -104,8 +104,8 @@ class LoginPage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           
-                          Get.toNamed(
-                            AppRoutes.register,
+                          Get.offNamed(
+                            AppRoutes.pendapatanlap1,
                           ); 
                         },
                         child: Text(

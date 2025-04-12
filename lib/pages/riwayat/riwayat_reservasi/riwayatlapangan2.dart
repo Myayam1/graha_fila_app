@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/myimgbtn.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
@@ -67,7 +70,9 @@ class RiwayatReservasi2 extends StatelessWidget {
                         color: Mycolors.blue,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.toNamed(
+                          AppRoutes.pageRiwayat
+                        );
                       },
                     ),
                   ],
