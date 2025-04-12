@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grafil_app/routes/app_route.dart';
 
-
 void main() {
   runApp(const MyApp());
     print("hi");
