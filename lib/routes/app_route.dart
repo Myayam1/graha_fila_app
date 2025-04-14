@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:grafil_app/bindings/login_binding.dart';
+import 'package:grafil_app/bindings/register_binding.dart';
 import 'package:grafil_app/bindings/splashscreen_binding.dart';
 import 'package:grafil_app/bindings/verification_binding.dart';
 import 'package:grafil_app/pages/authentication/forgotpasswordpage.dart';
@@ -9,7 +11,7 @@ import 'package:grafil_app/pages/dashboard/dashboardreservasipage.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan1.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan2.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan3.dart';
-import 'package:grafil_app/pages/authentication/loginpage.dart';
+import 'package:grafil_app/pages/authentication/login/loginpage.dart';
 import 'package:grafil_app/pages/reservasi/addreservasipage.dart';
 import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap1.dart';
 import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap2.dart';
@@ -54,12 +56,14 @@ class AppRoutes {
 
     GetPage(
       name: AppRoutes.login, 
-      page: () => LoginPage()
+      page: () => LoginPage(),
+      binding: LoginBinding()
       ),
 
     GetPage(
       name: AppRoutes.register, 
-      page: () => RegisterPage()
+      page: () => RegisterPage(),
+      binding: RegisterBinding()
       ),
 
     GetPage(

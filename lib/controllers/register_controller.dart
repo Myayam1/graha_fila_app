@@ -1,13 +1,20 @@
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:grafil_app/pages/authentication/register/registermodel.dart';
+import 'package:grafil_app/pages/authentication/register/registerservice.dart';
+
+import 'dart:convert';
 
 class RegisterController extends GetxController {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  final phoneController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController(); 
+
+  bool _isValidEmail(String email) {
+    final regex = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    return regex.hasMatch(email);
+  }
 
   Future<void> register() async {
     final String name = usernameController.text;
@@ -24,12 +31,15 @@ class RegisterController extends GetxController {
       return;
     }
 
+    if (!_isValidEmail(email)) {
+      Get.snackbar('Error', 'Email tidak valid');
+      return;
+    }
+
+    final registerData = RegisterModel(name: name, email: email, password: password);
+
     try {
-      final response = await http.post(
-        Uri.parse('https://6a41-103-164-229-141.ngrok-free.app/api/register'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'name': name, 'email': email, 'password': password}),
-      );
+      final response = await RegisterService.register(registerData);
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
@@ -39,8 +49,12 @@ class RegisterController extends GetxController {
         Get.snackbar('Berhasil', data['message']);
         Get.toNamed('/login');
       } else {
-        final error = json.decode(response.body);
-        Get.snackbar('Gagal', error['message'] ?? 'Terjadi kesalahan');
+        try {
+          final error = json.decode(response.body);
+          Get.snackbar('Gagal', error['message'] ?? 'Terjadi kesalahan');
+        } catch (e) {
+          Get.snackbar('Gagal', 'Terjadi kesalahan pada server');
+        }
       }
     } catch (e) {
       Get.snackbar('Error', 'Gagal terhubung ke server');

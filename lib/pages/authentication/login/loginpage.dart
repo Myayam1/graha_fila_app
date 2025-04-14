@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grafil_app/controllers/login_controller.dart';
 import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final loginController = Get.find<LoginController>();
+
+  @override
+  void initState() {
+    super.initState();
+    loginController.autoFillLogin();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +66,13 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   MyTextField(
-                    hintText: "Username",
-                    iconlogo: const Icon(Icons.person),
+                    hintText: "Email",
+                    iconlogo: const Icon(Icons.email),
                     width: double.infinity,
                     height: 50,
                     borderRadius: 24,
-                    textStyle: TextStyle(fontWeight: FontWeight.bold),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    controller: loginController.emailController,
                   ),
                   const SizedBox(height: 20),
                   MyTextField(
@@ -67,7 +82,8 @@ class LoginPage extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     borderRadius: 24,
-                    textStyle: TextStyle(fontWeight: FontWeight.bold),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    controller: loginController.passwordController,
                   ),
                   const SizedBox(height: 10),
                   Align(
@@ -76,39 +92,34 @@ class LoginPage extends StatelessWidget {
                       text: "Lupa password?",
                       textcolor: Mycolors.blue,
                       onTap: () {
-                          Get.toNamed(
-                            AppRoutes.forgotPassword,
-                          ); 
-                        },
+                        Get.toNamed(AppRoutes.forgotPassword);
+                      },
                     ),
                   ),
                   const SizedBox(height: 30),
-
                   MyButton(
                     text: "Masuk",
-                    onPressed: () {},
+                    onPressed: () {
+                      loginController.login();
+                    },
                     borderRadius: 24,
                     width: double.infinity,
                     height: 50,
                     buttonbackgroundColor: Mycolors.blue,
                   ),
-                  
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Belum punya akun? ",
                         style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
                       GestureDetector(
                         onTap: () {
-                          
-                          Get.offNamed(
-                            AppRoutes.register,
-                          ); 
+                          Get.offNamed(AppRoutes.register);
                         },
-                        child: Text(
+                        child: const Text(
                           "Daftar sekarang",
                           style: TextStyle(
                             fontSize: 14,

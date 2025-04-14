@@ -13,8 +13,7 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   
-    final registerController = Get.put(RegisterController());
-
+    final registerController = Get.find<RegisterController>();
     return Scaffold(
       backgroundColor: Mycolors.blue,
       body: Column(
