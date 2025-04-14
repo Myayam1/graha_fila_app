@@ -105,7 +105,7 @@ class LoginPage extends StatelessWidget {
                         onTap: () {
                           
                           Get.offNamed(
-                            AppRoutes.pendapatanlap1,
+                            AppRoutes.register,
                           ); 
                         },
                         child: Text(

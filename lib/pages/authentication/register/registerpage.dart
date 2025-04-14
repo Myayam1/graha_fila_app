@@ -5,13 +5,16 @@ import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
-
+import 'package:grafil_app/controllers/register_controller.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+  
+    final registerController = Get.put(RegisterController());
+
     return Scaffold(
       backgroundColor: Mycolors.blue,
       body: Column(
@@ -38,9 +41,9 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   const SizedBox(height: 20),
                   MyTextField(
+                    controller: registerController.usernameController,
                     hintText: "Username",
                     iconlogo: const Icon(Icons.person),
                     width: double.infinity,
@@ -50,6 +53,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 25),
                   MyTextField(
+                    controller: registerController.passwordController,
                     hintText: "Password",
                     obscureText: true,
                     iconlogo: const Icon(Icons.lock),
@@ -60,6 +64,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 25),
                   MyTextField(
+                    controller: registerController.phoneController,
                     hintText: "No Telp",
                     iconlogo: const Icon(Icons.phone),
                     width: double.infinity,
@@ -69,6 +74,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 25),
                   MyTextField(
+                    controller: registerController.emailController,
                     hintText: "Email",
                     iconlogo: const Icon(Icons.email),
                     width: double.infinity,
@@ -86,10 +92,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          
-                          Get.toNamed(
-                            AppRoutes.login,
-                          ); 
+                          Get.toNamed(AppRoutes.login);
                         },
                         child: Text(
                           "Masuk sekarang",
@@ -105,7 +108,8 @@ class RegisterPage extends StatelessWidget {
                   Spacer(),
                   MyButton(
                     text: "Sign up",
-                    onPressed: () {},
+                    onPressed:
+                        registerController.register, 
                     borderRadius: 24,
                     width: double.infinity,
                     height: 50,

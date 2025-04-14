@@ -18,7 +18,7 @@ import 'package:grafil_app/pages/riwayat/riwayat_reservasi/pageriwayatreservasi.
 import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan1.dart';
 import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan2.dart';
 import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan3.dart';
-import 'package:grafil_app/pages/authentication/registerpage.dart';
+import 'package:grafil_app/pages/authentication/register/registerpage.dart';
 import 'package:grafil_app/splashscreen.dart';
 
 class AppRoutes {
