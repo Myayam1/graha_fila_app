@@ -11,10 +11,13 @@ import 'package:grafil_app/pages/detail_lapangan/reservasilapangan2.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan3.dart';
 import 'package:grafil_app/pages/authentication/loginpage.dart';
 import 'package:grafil_app/pages/reservasi/addreservasipage.dart';
-import 'package:grafil_app/pages/riwayat/pageriwayatreservasi.dart';
-import 'package:grafil_app/pages/riwayat/riwayatlapangan1.dart';
-import 'package:grafil_app/pages/riwayat/riwayatlapangan2.dart';
-import 'package:grafil_app/pages/riwayat/riwayatlapangan3.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap1.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap2.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap3.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_reservasi/pageriwayatreservasi.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan1.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan2.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan3.dart';
 import 'package:grafil_app/pages/authentication/registerpage.dart';
 import 'package:grafil_app/splashscreen.dart';
 
@@ -30,11 +33,17 @@ class AppRoutes {
   static const reservasi1 = '/reservasi/lapangan1';
   static const reservasi2 = '/reservasi/lapangan2';
   static const reservasi3 = '/reservasi/lapangan3';
-  static const riwayat1 = '/riwayat/lapangan1';
-  static const riwayat2 = '/riwayat/lapangan2';
-  static const riwayat3 = '/riwayat/lapangan3';
+  static const riwayatreservasi1 = '/riwayat/lapangan1';
+  static const riwayatreservasi2 = '/riwayat/lapangan2';
+  static const riwayatreservasi3 = '/riwayat/lapangan3';
   static const pageRiwayat = '/riwayat/page';
   static const addReservasi = '/reservasi/add';
+  static const pendapatanlap1 = '/riwayat/pendapatan1';
+  static const pendapatanlap2 = '/riwayat/pendapatan2';
+  static const pendapatanlap3 = '/riwayat/pendapatan3';
+ 
+
+ 
 
   static final routes = [
     GetPage(
@@ -95,28 +104,53 @@ class AppRoutes {
       ),
 
     GetPage(
-      name: AppRoutes.riwayat1, 
-      page: () => RiwayatReservasi1()
+      name: AppRoutes.riwayatreservasi1, 
+      page: () => RiwayatReservasi1(),
+      transition: Transition.noTransition,
       ),
 
     GetPage(
-      name: AppRoutes.riwayat2, 
-      page: () => RiwayatReservasi2()
+      name: AppRoutes.riwayatreservasi2, 
+      page: () => RiwayatReservasi2(),
+      transition: Transition.noTransition,
       ),
 
     GetPage(
-      name: AppRoutes.riwayat3, 
-      page: () => RiwayatReservasi3()
+      name: AppRoutes.riwayatreservasi3, 
+      page: () => RiwayatReservasi3(),
+      transition: Transition.noTransition,
       ),
 
     GetPage(
       name: AppRoutes.pageRiwayat, 
-      page: () => RiwayatReservasi()
+      page: () => RiwayatReservasi(),
+      transition: Transition.noTransition,
       ),
 
     GetPage(
       name: AppRoutes.addReservasi, 
       page: () => AddReservationPage()
       ),
+
+    GetPage(
+      name: AppRoutes.pendapatanlap1, 
+      page: () => RiwayatPendapatanLapangan1(),
+      transition: Transition.noTransition,
+      ),
+
+    GetPage(
+      name: AppRoutes.pendapatanlap2, 
+      page: () => RiwayatPendapatanLapangan2(),
+      transition: Transition.noTransition,
+      ),
+
+    GetPage(
+      name: AppRoutes.pendapatanlap3, 
+      page: () => RiwayatPendapatanLapangan3(),
+      transition: Transition.noTransition,
+      ),
+
+
+
   ];
 }

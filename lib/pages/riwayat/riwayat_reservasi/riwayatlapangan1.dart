@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/myimgbtn.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
 
-class RiwayatReservasi3 extends StatelessWidget {
+class RiwayatReservasi1 extends StatelessWidget {
   final List<Map<String, String>> datareservasi = [
     {
       'waktu': '13:00 - 14:00 ',
@@ -35,7 +38,8 @@ class RiwayatReservasi3 extends StatelessWidget {
       'telp': '081212341444',
     },
   ];
-  RiwayatReservasi3({super.key});
+
+  RiwayatReservasi1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +71,16 @@ class RiwayatReservasi3 extends StatelessWidget {
                         color: Mycolors.blue,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.toNamed(
+                          AppRoutes.pageRiwayat
+                        );
                       },
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  "Lapangan 3",
+                  "Lapangan 1",
                   style: TextStyle(
                     color: Mycolors.blue,
                     fontSize: 26,
@@ -97,7 +103,7 @@ class RiwayatReservasi3 extends StatelessWidget {
                     ],
                   ),
                   child: MyImageButton(
-                    imagePath: 'assets/images/logolapangan3.png',
+                    imagePath: 'assets/images/logolapangan1.png',
                     onTap: () {},
                     width: 250,
                     height: 150,
@@ -135,7 +141,12 @@ class RiwayatReservasi3 extends StatelessWidget {
                               width: double.infinity,
                               height: 50,
                               borderRadius: 24,
-                              textStyle: TextStyle(fontWeight: FontWeight.bold),hintTextStyle: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,color: Mycolors.blue),
+                              textStyle: TextStyle(fontWeight: FontWeight.bold),
+                              hintTextStyle: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Mycolors.blue,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 10),
