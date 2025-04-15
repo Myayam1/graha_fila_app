@@ -5,33 +5,28 @@ import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
+import 'package:grafil_app/controllers/register_controller.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+  
+    final registerController = Get.find<RegisterController>();
     return Scaffold(
       backgroundColor: Mycolors.blue,
       body: Column(
         children: [
           const SizedBox(height: 65),
           const MyText(
-            text: "Hello!",
-            fontSize: 55,
+            text: "Register",
+            fontSize: 40,
             fontWeight: FontWeight.w800,
             textcolor: Mycolors.white,
           ),
-          const SizedBox(height: 2),
-          const MyText(
-            text: "Selamat datang di Graha Fila Sport",
-            fontSize: 20,
-            textcolor: Mycolors.white,
-            fontWeight: FontWeight.w400,
-          ),
-          const SizedBox(height: 120),
+          const SizedBox(height: 70),
           Expanded(
-            flex: 2,
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
@@ -45,71 +40,61 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const MyText(
-                    text: "Login",
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                  ),
                   const SizedBox(height: 20),
                   MyTextField(
+                    controller: registerController.usernameController,
                     hintText: "Username",
                     iconlogo: const Icon(Icons.person),
                     width: double.infinity,
                     height: 50,
                     borderRadius: 24,
-                    textStyle: TextStyle(fontWeight: FontWeight.bold),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 25),
                   MyTextField(
+                    controller: registerController.passwordController,
                     hintText: "Password",
                     obscureText: true,
                     iconlogo: const Icon(Icons.lock),
                     width: double.infinity,
                     height: 50,
                     borderRadius: 24,
-                    textStyle: TextStyle(fontWeight: FontWeight.bold),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: MyText(
-                      text: "Lupa password?",
-                      textcolor: Mycolors.blue,
-                      onTap: () {
-                          Get.toNamed(
-                            AppRoutes.forgotPassword,
-                          ); 
-                        },
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-
-                  MyButton(
-                    text: "Masuk",
-                    onPressed: () {},
-                    borderRadius: 24,
+                  const SizedBox(height: 25),
+                  MyTextField(
+                    controller: registerController.phoneController,
+                    hintText: "No Telp",
+                    iconlogo: const Icon(Icons.phone),
                     width: double.infinity,
                     height: 50,
-                    buttonbackgroundColor: Mycolors.blue,
+                    borderRadius: 24,
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 25),
+                  MyTextField(
+                    controller: registerController.emailController,
+                    hintText: "Email",
+                    iconlogo: const Icon(Icons.email),
+                    width: double.infinity,
+                    height: 50,
+                    borderRadius: 24,
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Belum punya akun? ",
+                        "Sudah punya akun? ",
                         style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
                       GestureDetector(
                         onTap: () {
-                          
-                          Get.offNamed(
-                            AppRoutes.pendapatanlap1,
-                          ); 
+                          Get.toNamed(AppRoutes.login);
                         },
                         child: Text(
-                          "Daftar sekarang",
+                          "Masuk sekarang",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.blue,
@@ -119,6 +104,19 @@ class LoginPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Spacer(),
+                  MyButton(
+                    text: "Sign up",
+                    onPressed:
+                        registerController.register, 
+                    borderRadius: 24,
+                    width: double.infinity,
+                    height: 50,
+                    buttonbackgroundColor: Mycolors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grafil_app/controllers/login_controller.dart';
 import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
 
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final loginController = Get.find<LoginController>();
+
+  @override
+  void initState() {
+    super.initState();
+    loginController.autoFillLogin();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +31,21 @@ class RegisterPage extends StatelessWidget {
         children: [
           const SizedBox(height: 65),
           const MyText(
-            text: "Register",
-            fontSize: 40,
+            text: "Hello!",
+            fontSize: 55,
             fontWeight: FontWeight.w800,
             textcolor: Mycolors.white,
           ),
-          const SizedBox(height: 70),
+          const SizedBox(height: 2),
+          const MyText(
+            text: "Selamat datang di Graha Fila Sport",
+            fontSize: 20,
+            textcolor: Mycolors.white,
+            fontWeight: FontWeight.w400,
+          ),
+          const SizedBox(height: 120),
           Expanded(
+            flex: 2,
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.all(24),
@@ -38,17 +59,22 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
+                  const MyText(
+                    text: "Login",
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                  ),
                   const SizedBox(height: 20),
                   MyTextField(
-                    hintText: "Username",
-                    iconlogo: const Icon(Icons.person),
+                    hintText: "Email",
+                    iconlogo: const Icon(Icons.email),
                     width: double.infinity,
                     height: 50,
                     borderRadius: 24,
                     textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    controller: loginController.emailController,
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
                   MyTextField(
                     hintText: "Password",
                     obscureText: true,
@@ -57,42 +83,44 @@ class RegisterPage extends StatelessWidget {
                     height: 50,
                     borderRadius: 24,
                     textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    controller: loginController.passwordController,
                   ),
-                  const SizedBox(height: 25),
-                  MyTextField(
-                    hintText: "No Telp",
-                    iconlogo: const Icon(Icons.phone),
+                  const SizedBox(height: 10),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: MyText(
+                      text: "Lupa password?",
+                      textcolor: Mycolors.blue,
+                      onTap: () {
+                        Get.toNamed(AppRoutes.forgotPassword);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  MyButton(
+                    text: "Masuk",
+                    onPressed: () {
+                      loginController.login();
+                    },
+                    borderRadius: 24,
                     width: double.infinity,
                     height: 50,
-                    borderRadius: 24,
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    buttonbackgroundColor: Mycolors.blue,
                   ),
-                  const SizedBox(height: 25),
-                  MyTextField(
-                    hintText: "Email",
-                    iconlogo: const Icon(Icons.email),
-                    width: double.infinity,
-                    height: 50,
-                    borderRadius: 24,
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Sudah punya akun? ",
+                      const Text(
+                        "Belum punya akun? ",
                         style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
                       GestureDetector(
                         onTap: () {
-                          
-                          Get.toNamed(
-                            AppRoutes.login,
-                          ); 
+                          Get.offNamed(AppRoutes.register);
                         },
-                        child: Text(
-                          "Masuk sekarang",
+                        child: const Text(
+                          "Daftar sekarang",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.blue,
@@ -102,18 +130,6 @@ class RegisterPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Spacer(),
-                  MyButton(
-                    text: "Sign up",
-                    onPressed: () {},
-                    borderRadius: 24,
-                    width: double.infinity,
-                    height: 50,
-                    buttonbackgroundColor: Mycolors.blue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                  SizedBox(height: 20),
                 ],
               ),
             ),
