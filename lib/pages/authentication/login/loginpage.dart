@@ -97,35 +97,51 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  MyButton(
-                    text: "Masuk",
-                    onPressed: () {
-                      loginController.login();
-                    },
-                    borderRadius: 24,
-                    width: double.infinity,
-                    height: 50,
-                    buttonbackgroundColor: Mycolors.blue,
-                  ),
+                  Obx(() {
+                    return MyButton(
+                      text:
+                          loginController.isLoading.value
+                              ? "Memproses..."
+                              : "Masuk",
+                      isLoading: loginController.isLoading.value,
+                      onPressed:
+                          loginController.isLoading.value
+                              ? null
+                              : () {
+                                loginController.login();
+                              },
+                      borderRadius: 24,
+                      width: double.infinity,
+                      height: 50,
+                      buttonbackgroundColor: Mycolors.blue,
+                    );
+                  }),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Belum punya akun? ",
-                        style: TextStyle(fontSize: 14, color: Colors.black),
+                      MyText(
+                        text: "Belum punya akun?",
+                        fontSize: 14,
+                        textcolor: Mycolors.blue,
                       ),
+                      const SizedBox(width: 4),
                       GestureDetector(
                         onTap: () {
                           Get.offNamed(AppRoutes.register);
                         },
-                        child: const Text(
-                          "Daftar sekarang",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: MyText(
+                          text: "Daftar sekarang",
+                          textcolor: Mycolors.darkBlue,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          onTap: () {
+                            Get.toNamed(AppRoutes.loading);
+
+                            Future.delayed(const Duration(seconds: 1), () {
+                              Get.offNamed(AppRoutes.register);
+                            });
+                          },
                         ),
                       ),
                     ],

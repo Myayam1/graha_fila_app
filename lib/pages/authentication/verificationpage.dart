@@ -42,7 +42,6 @@ class Verificationpage extends StatelessWidget {
               ),
               const SizedBox(height: 45),
 
-              // Row lingkaran textfield
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(4, (index) {
@@ -65,10 +64,8 @@ class Verificationpage extends StatelessWidget {
               MyButton(
                 text: "Kirim",
                 onPressed: () {
-                  //nanti logic nya di sini, ini sementara gini buat liat page newpasswordnya gmna 
-                  Get.toNamed(
-                            AppRoutes.newPassword,
-                          );
+                  //nanti logic nya di sini, ini sementara gini buat liat page newpasswordnya gmna
+                  Get.toNamed(AppRoutes.newPassword);
                 },
                 buttonbackgroundColor: Mycolors.blue,
                 textColor: Mycolors.white,

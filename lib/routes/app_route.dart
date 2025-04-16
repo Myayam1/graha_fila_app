@@ -4,6 +4,7 @@ import 'package:grafil_app/bindings/register_binding.dart';
 import 'package:grafil_app/bindings/splashscreen_binding.dart';
 import 'package:grafil_app/bindings/verification_binding.dart';
 import 'package:grafil_app/pages/authentication/forgotpasswordpage.dart';
+import 'package:grafil_app/pages/authentication/loadingpage.dart';
 import 'package:grafil_app/pages/authentication/newpasswordpage.dart';
 import 'package:grafil_app/pages/authentication/verificationpage.dart';
 import 'package:grafil_app/pages/dashboard/dashboardlapangan.dart';
@@ -43,6 +44,8 @@ class AppRoutes {
   static const pendapatanlap1 = '/riwayat/pendapatan1';
   static const pendapatanlap2 = '/riwayat/pendapatan2';
   static const pendapatanlap3 = '/riwayat/pendapatan3';
+  static const loading = '/loading';
+
  
 
  
@@ -154,6 +157,7 @@ class AppRoutes {
       transition: Transition.noTransition,
       ),
 
+    GetPage(name: AppRoutes.loading, page: () => LoadingPage()),
 
 
   ];
