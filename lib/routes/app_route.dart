@@ -8,6 +8,7 @@ import 'package:grafil_app/bindings/verification_binding.dart';
 import 'package:grafil_app/pages/authentication/forgotPassword/forgotpasswordpage.dart';
 import 'package:grafil_app/pages/authentication/newpassword/newpasswordpage.dart';
 import 'package:grafil_app/pages/authentication/verification/verificationpage.dart';
+import 'package:grafil_app/pages/authentication/loadingpage.dart';
 import 'package:grafil_app/pages/dashboard/dashboardlapangan.dart';
 import 'package:grafil_app/pages/dashboard/dashboardreservasipage.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan1.dart';
@@ -45,7 +46,9 @@ class AppRoutes {
   static const pendapatanlap1 = '/riwayat/pendapatan1';
   static const pendapatanlap2 = '/riwayat/pendapatan2';
   static const pendapatanlap3 = '/riwayat/pendapatan3';
- 
+  static const loading = '/loading';
+
+
 
  
 
@@ -159,6 +162,7 @@ class AppRoutes {
       transition: Transition.noTransition,
       ),
 
+    GetPage(name: AppRoutes.loading, page: () => LoadingPage()),
 
 
   ];

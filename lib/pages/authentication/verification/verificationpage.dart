@@ -45,7 +45,6 @@ class Verificationpage extends StatelessWidget {
               ),
               const SizedBox(height: 45),
 
-              // Row lingkaran textfield
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(4, (index) {

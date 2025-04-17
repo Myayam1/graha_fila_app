@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
-
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardLapanganPage extends StatelessWidget {
   const DashboardLapanganPage({Key? key}) : super(key: key);
@@ -20,9 +22,8 @@ class DashboardLapanganPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header
+                
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const MyText(
                       text: 'Dashboard',
@@ -30,24 +31,36 @@ class DashboardLapanganPage extends StatelessWidget {
                       textcolor: Mycolors.blue,
                       fontWeight: FontWeight.w800,
                     ),
-
+                    const Spacer(),
+                    IconButton(
+                      icon: Icon(Icons.logout),color: Mycolors.darkBlue,
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.remove(
+                          'token',
+                        ); 
+                        Get.offAllNamed(
+                          AppRoutes.login,
+                        );
+                      },
+                    ),
                   ],
                 ),
+
                 const SizedBox(height: 16),
 
-                
                 Mycard(
                   width: double.infinity,
                   borderRadius: 16,
                   child: Stack(
                     children: [
-                      // card
+                      
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Icon
+                           
                             Container(
                               width: 40,
                               height: 40,
@@ -61,7 +74,7 @@ class DashboardLapanganPage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 16),
-                            // detail
+                            
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,7 +144,7 @@ class DashboardLapanganPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                // Action Buttons
+               
                 Row(
                   children: [
                     Expanded(
@@ -159,16 +172,14 @@ class DashboardLapanganPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
 
-                // Reservation Cards
+              
                 Mycard(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   borderRadius: 18,
                   color: Mycolors.white,
                   hasOutline: true,
                   outlineColor: Mycolors.blue,
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(
@@ -205,9 +216,7 @@ class DashboardLapanganPage extends StatelessWidget {
                   color: Mycolors.white,
                   hasOutline: true,
                   outlineColor: Mycolors.blue,
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(
@@ -244,9 +253,7 @@ class DashboardLapanganPage extends StatelessWidget {
                   color: Mycolors.white,
                   hasOutline: true,
                   outlineColor: Mycolors.blue,
-                  onTap: () {
-                    
-                  },
+                  onTap: () {},
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(
