@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
+import 'package:grafil_app/bindings/forgotpass_binding.dart';
 import 'package:grafil_app/bindings/login_binding.dart';
+import 'package:grafil_app/bindings/newpassword_binding.dart';
 import 'package:grafil_app/bindings/register_binding.dart';
 import 'package:grafil_app/bindings/splashscreen_binding.dart';
 import 'package:grafil_app/bindings/verification_binding.dart';
-import 'package:grafil_app/pages/authentication/forgotpasswordpage.dart';
-import 'package:grafil_app/pages/authentication/newpasswordpage.dart';
-import 'package:grafil_app/pages/authentication/verificationpage.dart';
+import 'package:grafil_app/pages/authentication/forgotPassword/forgotpasswordpage.dart';
+import 'package:grafil_app/pages/authentication/newpassword/newpasswordpage.dart';
+import 'package:grafil_app/pages/authentication/verification/verificationpage.dart';
 import 'package:grafil_app/pages/dashboard/dashboardlapangan.dart';
 import 'package:grafil_app/pages/dashboard/dashboardreservasipage.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan1.dart';
@@ -68,12 +70,15 @@ class AppRoutes {
 
     GetPage(
       name: AppRoutes.forgotPassword, 
-      page: () => ForgotPasswordPage()
+      page: () => ForgotPasswordPage(),
+      binding: ForgotPasswordBinding(),
+
       ),
 
     GetPage(
       name: AppRoutes.newPassword, 
-      page: () => Newpasswordpage()
+      page: () => Newpasswordpage(),
+      binding: NewPasswordBinding()
       ),
       
     GetPage(
