@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grafil_app/controllers/verificationcontroller.dart';
+import 'package:grafil_app/controllers/forgot_password_controller.dart';
+import 'package:grafil_app/controllers/newpassword_controller.dart';
+import 'package:grafil_app/controllers/verification_controller.dart';
+import 'package:grafil_app/pages/authentication/forgotPassword/forgotservice.dart';
 import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
@@ -12,7 +15,7 @@ class Verificationpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<VerificationController>();
+    final verificationController = Get.find<VerifficationController>();
 
     return Scaffold(
       body: SafeArea(
@@ -48,12 +51,16 @@ class Verificationpage extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     child: MyCircleTextField(
-                      controller: controller.textControllers[index],
-                      focusNode: controller.focusNodes[index],
+                      controller: verificationController.textControllers[index],
+                      focusNode: verificationController.focusNodes[index],
                       nextFocusNode:
-                          index < 3 ? controller.focusNodes[index + 1] : null,
+                          index < 3
+                              ? verificationController.focusNodes[index + 1]
+                              : null,
                       previousFocusNode:
-                          index > 0 ? controller.focusNodes[index - 1] : null,
+                          index > 0
+                              ? verificationController.focusNodes[index - 1]
+                              : null,
                     ),
                   );
                 }),
@@ -63,10 +70,27 @@ class Verificationpage extends StatelessWidget {
 
               MyButton(
                 text: "Kirim",
-                onPressed: () {
-                  //nanti logic nya di sini, ini sementara gini buat liat page newpasswordnya gmna
-                  Get.toNamed(AppRoutes.newPassword);
+                onPressed: () async {
+                  final code = verificationController.code;
+                  final email = Get.find<ForgotPasswordController>().emailController.text;
+
+                  try {
+                    
+                    final response = await ForgotPasswordService.validateCode(
+                      email: email,
+                      code: code,
+                    );
+
+                    
+                    final newPassController = Get.put(NewPasswordController());
+                    newPassController.setEmailAndCode(email: email, code: code);
+                    Get.toNamed(AppRoutes.newPassword);
+                  } catch (e) {
+                    
+                    Get.snackbar("Kode OTP Salah", "$e");
+                  }
                 },
+
                 buttonbackgroundColor: Mycolors.blue,
                 textColor: Mycolors.white,
                 width: double.infinity,

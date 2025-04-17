@@ -6,7 +6,7 @@ import 'dart:convert';
 class RegisterService {
   static Future<http.Response> register(RegisterModel data) {
     return http.post(
-      Uri.parse('https://0cfa-2404-c0-7450-00-537f-3a34.ngrok-free.app/api/register'),
+      Uri.parse('https://5e00-103-164-229-141.ngrok-free.app/api/register'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(data.toJson()),
     );

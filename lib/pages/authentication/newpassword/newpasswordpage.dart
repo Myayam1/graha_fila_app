@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:grafil_app/controllers/newpassword_controller.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
@@ -9,6 +11,9 @@ class Newpasswordpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+  final newpasswordController = Get.find<NewPasswordController>();
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -44,13 +49,14 @@ class Newpasswordpage extends StatelessWidget {
               const SizedBox(height: 14),
 
               // New Password TextField
-              const MyTextField(
+              MyTextField(
                 width: double.infinity,
                 height: 50,
                 borderRadius: 25,
                 hintText: "Minimal 8 digits",
                 obscureText: true,
                 hasOutline: true,
+                controller: newpasswordController.passwordController,
               ),
 
               const SizedBox(height: 40),
@@ -69,13 +75,15 @@ class Newpasswordpage extends StatelessWidget {
               const SizedBox(height: 14),
 
               // Confirm Password TextField - showing password dots
-              const MyTextField(
+              MyTextField(
                 width: double.infinity,
                 height: 50,
                 borderRadius: 25,
                 hintText: "",
                 obscureText: true,
                 hasOutline: true,
+                controller: newpasswordController.confirmPasswordController,
+
               ),
 
               const SizedBox(height: 60,),
@@ -84,7 +92,7 @@ class Newpasswordpage extends StatelessWidget {
               MyButton(
                 text: "Kirim",
                 onPressed: () {
-                  
+                  newpasswordController.resetPassword();
                 },
                 buttonbackgroundColor: Mycolors.blue,
                 textColor: Mycolors.white,
