@@ -12,7 +12,6 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
     final registerController = Get.find<RegisterController>();
     return Scaffold(
       backgroundColor: Mycolors.blue,
@@ -70,6 +69,7 @@ class RegisterPage extends StatelessWidget {
                     height: 50,
                     borderRadius: 24,
                     textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                    digitsOnly: true,
                   ),
                   const SizedBox(height: 25),
                   MyTextField(
@@ -105,17 +105,28 @@ class RegisterPage extends StatelessWidget {
                     ],
                   ),
                   Spacer(),
-                  MyButton(
-                    text: "Sign up",
-                    onPressed:
-                        registerController.register, 
-                    borderRadius: 24,
-                    width: double.infinity,
-                    height: 50,
-                    buttonbackgroundColor: Mycolors.blue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  Obx(() {
+                    return MyButton(
+                      text:
+                          registerController.isLoading.value
+                              ? "Memproses..."
+                              : "Sign Up",
+                      isLoading: registerController.isLoading.value,
+                      onPressed:
+                          registerController.isLoading.value
+                          
+                              ? null
+                              : registerController.register,
+                      borderRadius: 24,
+                      width: double.infinity,
+                      height: 50,
+                      buttonbackgroundColor: Mycolors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      
+                    );
+                  }),
+
                   SizedBox(height: 20),
                 ],
               ),

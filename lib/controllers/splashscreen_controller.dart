@@ -18,7 +18,7 @@ class SplashController extends GetxController {
 
       if (token != null && token.isNotEmpty) {
         print("User is already logged in. Navigating to Dashboard...");
-        Get.offAllNamed(AppRoutes.dashboardLapangan);
+        Get.offAllNamed(AppRoutes.dashboardReservasi);
       } else {
         print("No token found. Navigating to Login...");
         Get.offAllNamed(AppRoutes.login);

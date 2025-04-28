@@ -100,7 +100,7 @@ class MyButton extends StatelessWidget {
                   padding: padding ??
                       const EdgeInsets.symmetric(
                         vertical: 14,
-                        horizontal: 20,
+                        horizontal: 10,
                       ),
                   side: BorderSide(
                     color: outlineColor ?? Colors.grey,
