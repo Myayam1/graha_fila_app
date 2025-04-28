@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grafil_app/controllers/loading_controller.dart';
 import 'package:grafil_app/widget/mycolor.dart';
+import 'package:lottie/lottie.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});
@@ -13,13 +14,23 @@ class LoadingPage extends StatelessWidget {
 
     return Obx(() {
       return Scaffold(
-        backgroundColor: Mycolors.blue,
+        backgroundColor: Mycolors.white,
         body: Center(
           child: loadingController.isLoading.value
-              ? const CircularProgressIndicator(color: Mycolors.white) 
-              : const SizedBox.shrink(),  
+              ? Lottie.asset(
+                  'assets/loadinganimation.json',
+                  width: 300,
+                  height: 300,
+                  fit: BoxFit.contain,
+                )
+              : const SizedBox.shrink(),
         ),
       );
-    });
   }
-}
+  );
+      }
+      }
+    
+    
+  
+

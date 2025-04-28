@@ -53,7 +53,7 @@ class LoginController extends GetxController {
         }
 
         Get.snackbar('Berhasil', 'Login berhasil');
-        Get.offAllNamed(AppRoutes.dashboardLapangan);
+        Get.offAllNamed(AppRoutes.dashboardReservasi);
       } else {
         final error = json.decode(response.body);
         Get.snackbar('Login Gagal', error['message'] ?? 'Cek kembali email dan password');

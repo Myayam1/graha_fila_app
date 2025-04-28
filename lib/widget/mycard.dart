@@ -10,7 +10,7 @@ class Mycard extends StatelessWidget {
   final double? outlineWidth;
   final Widget? child;
   final VoidCallback? onTap;
-  final EdgeInsetsGeometry? margin; // Tambahkan margin opsional
+  final EdgeInsetsGeometry? margin;
 
   const Mycard({
     Key? key,
@@ -23,7 +23,7 @@ class Mycard extends StatelessWidget {
     this.outlineWidth,
     this.child,
     this.onTap,
-    this.margin, // Tambahkan margin ke constructor
+    this.margin,
   }) : super(key: key);
 
   @override
@@ -31,9 +31,9 @@ class Mycard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: width,
+        width: width, // cukup begini saja
         height: height,
-        margin: margin, // Gunakan margin opsional
+        margin: margin,
         decoration: BoxDecoration(
           color: color ?? Colors.white,
           borderRadius: BorderRadius.circular(borderRadius ?? 10.0),
