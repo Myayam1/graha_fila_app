@@ -26,8 +26,7 @@ class DashboardReservasiPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            
+            children: [  
               Row(
                 children: [
                   const MyText(
@@ -126,8 +125,6 @@ class DashboardReservasiPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
-             
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -201,8 +198,6 @@ class DashboardReservasiPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 15),
-
-              
               Row(
                 children: [
                   Padding(

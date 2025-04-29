@@ -23,7 +23,7 @@ class MyTextField extends StatefulWidget {
   final bool? hasOutline;
   final Color? outlineColor;
   final double? outlineWidth;
-  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters; 
   final bool? digitsOnly;
   final Function(String)? onDateSelected;
 
@@ -47,6 +47,7 @@ class MyTextField extends StatefulWidget {
     this.hasOutline,
     this.outlineColor,
     this.outlineWidth,
+    this.inputFormatters,
     this.keyboardType,
     this.digitsOnly,
     this.onDateSelected,
@@ -86,6 +87,8 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Center(
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
+          keyboardType: widget.keyboardType, // Gunakan keyboard type
+          inputFormatters: widget.inputFormatters,
           obscureText: widget.obscureText,
           keyboardType:
               widget.keyboardType ??
