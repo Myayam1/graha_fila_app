@@ -23,8 +23,9 @@ class MyTextField extends StatefulWidget {
   final bool? hasOutline;
   final Color? outlineColor;
   final double? outlineWidth;
-  final TextInputType? keyboardType; 
   final List<TextInputFormatter>? inputFormatters; 
+  final bool? digitsOnly;
+  final Function(String)? onDateSelected;
 
   const MyTextField({
     super.key,
@@ -46,8 +47,10 @@ class MyTextField extends StatefulWidget {
     this.hasOutline,
     this.outlineColor,
     this.outlineWidth,
-    this.keyboardType, 
     this.inputFormatters,
+    this.keyboardType,
+    this.digitsOnly,
+    this.onDateSelected,
   });
 
   @override
@@ -73,7 +76,6 @@ class _MyTextFieldState extends State<MyTextField> {
                   width: widget.outlineWidth ?? 1.5,
                 )
                 : null,
-
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -88,6 +90,15 @@ class _MyTextFieldState extends State<MyTextField> {
           keyboardType: widget.keyboardType, // Gunakan keyboard type
           inputFormatters: widget.inputFormatters,
           obscureText: widget.obscureText,
+          keyboardType:
+              widget.keyboardType ??
+              (widget.digitsOnly == true
+                  ? TextInputType.number
+                  : TextInputType.text),
+          inputFormatters:
+              widget.digitsOnly == true
+                  ? [FilteringTextInputFormatter.digitsOnly]
+                  : null,
           style:
               widget.textStyle ??
               GoogleFonts.montserrat(
@@ -105,7 +116,7 @@ class _MyTextFieldState extends State<MyTextField> {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: initialDate,
-                      firstDate: now,
+                      firstDate: DateTime.now(),
                       lastDate: DateTime(2100),
                       builder: (context, child) {
                         return Theme(
@@ -127,12 +138,17 @@ class _MyTextFieldState extends State<MyTextField> {
                     );
 
                     if (pickedDate != null) {
+                      String formattedDate = DateFormat(
+                        'dd-MM-yyyy',
+                      ).format(pickedDate);
                       setState(() {
                         selectedDate = pickedDate;
-                        widget.controller?.text = DateFormat(
-                          'dd-MM-yyyy',
-                        ).format(pickedDate);
+                        widget.controller?.text = formattedDate;
                       });
+
+                      if (widget.onDateSelected != null) {
+                        widget.onDateSelected!(formattedDate);
+                      }
                     }
                   }
                   : null,
@@ -146,7 +162,10 @@ class _MyTextFieldState extends State<MyTextField> {
                   fontWeight: widget.fontWeight ?? FontWeight.normal,
                 ),
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 13),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 13,
+            ),
             prefixIcon: widget.iconlogo,
             suffixIcon: widget.suffixIcon,
           ),

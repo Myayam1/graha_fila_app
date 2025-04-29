@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:grafil_app/controllers/detail_reservasi_controller.dart';
 import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mycolor.dart';
-import 'package:grafil_app/widget/myimgbtn.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
 import 'package:grafil_app/widget/mytext.dart';
+import 'package:grafil_app/widget/mytextfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardReservasiPage extends StatelessWidget {
-  const DashboardReservasiPage({Key? key}) : super(key: key);
+  final reservationController = Get.find<ReservationController>();
+  final TextEditingController dateController = TextEditingController();
+
+  DashboardReservasiPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,37 +23,32 @@ class DashboardReservasiPage extends StatelessWidget {
       backgroundColor: Mycolors.background,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              
+            children: [  
               Row(
-                  children: [
-                    const MyText(
-                      text: 'Dashboard',
-                      fontSize: 24,
-                      textcolor: Mycolors.blue,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: Icon(Icons.logout),color: Mycolors.darkBlue,
-                      onPressed: () async {
-                        final prefs = await SharedPreferences.getInstance();
-                        await prefs.remove(
-                          'token',
-                        ); 
-                        Get.offAllNamed(
-                          AppRoutes.login,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-
+                children: [
+                  const MyText(
+                    text: 'Dashboard',
+                    fontSize: 24,
+                    textcolor: Mycolors.blue,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.logout, color: Mycolors.darkBlue),
+                    onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.remove('token');
+                      Get.offAllNamed(AppRoutes.login);
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(height: 16),
 
+          
               Mycard(
                 width: double.infinity,
                 borderRadius: 16,
@@ -77,37 +76,20 @@ class DashboardReservasiPage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const MyText(
+                              children: const [
+                                MyText(
                                   text: 'Graha Fila Sport',
                                   fontSize: 17,
                                   textcolor: Mycolors.blue,
                                   fontWeight: FontWeight.w800,
                                 ),
-                                const MyText(
+                                MyText(
                                   text: 'Badminton',
                                   fontSize: 17,
                                   textcolor: Mycolors.blue,
                                   fontWeight: FontWeight.w800,
                                 ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    MyText(
-                                      text: 'Pendapatan bulan ini',
-                                      fontSize: 13,
-                                      textcolor: Colors.grey,
-                                    ),
-                                    MyText(
-                                      text: 'Rp 135.000',
-                                      fontSize: 17,
-                                      textcolor: Mycolors.blue,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ],
-                                ),
+                                SizedBox(height: 8),
                               ],
                             ),
                           ),
@@ -119,7 +101,9 @@ class DashboardReservasiPage extends StatelessWidget {
                       right: 10,
                       child: MyButton(
                         text: 'Riwayat',
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.pageRiwayat);
+                        },
                         buttonbackgroundColor: Mycolors.blue,
                         textColor: Mycolors.white,
                         fontSize: 12,
@@ -141,104 +125,203 @@ class DashboardReservasiPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
-
-              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyImageButton(
-                    imagePath: 'assets/images/logolapangan1.png',
-                    onTap: () {
-                      Get.toNamed(
-                          AppRoutes.addReservasi,
-                        );
+                  MyButton(
+                    text: 'All',
+                    onPressed: () {
+                      reservationController.changeSpotFilter(0);
                     },
-                    width: 105,
-                    height: 100,
-                    borderRadius: 20,
+                    buttonbackgroundColor: Mycolors.blue,
+                    textColor: Mycolors.white,
+                    fontSize: 14,
+                    height: 40,
+                    fontWeight: FontWeight.bold,
+                    width: 80,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                   ),
-                  MyImageButton(
-                    imagePath: 'assets/images/logolapangan2.png',
-                    onTap: () {
-                      Get.toNamed(
-                          AppRoutes.addReservasi,
-                        );
+                  const SizedBox(width: 10),
+                  MyButton(
+                    text: 'Lap.1',
+                    onPressed: () {
+                      reservationController.changeSpotFilter(1);
                     },
-                    width: 105,
-                    height: 100,
-                    borderRadius: 20,
+                    buttonbackgroundColor: Mycolors.blue,
+                    textColor: Mycolors.white,
+                    fontSize: 14,
+                    height: 40,
+                    fontWeight: FontWeight.bold,
+                    width: 100,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                   ),
-                  MyImageButton(
-                    imagePath: 'assets/images/logolapangan3.png',
-                    onTap: () {
-                      Get.toNamed(
-                          AppRoutes.addReservasi,
-                        );
+                  const SizedBox(width: 10),
+                  MyButton(
+                    text: 'Lap.2',
+                    onPressed: () {
+                      reservationController.changeSpotFilter(2);
                     },
-                    width: 105,
-                    height: 100,
-                    borderRadius: 20,
+                    buttonbackgroundColor: Mycolors.blue,
+                    textColor: Mycolors.white,
+                    fontSize: 14,
+                    height: 40,
+                    fontWeight: FontWeight.bold,
+                    width: 100,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  MyButton(
+                    text: 'Lap.3',
+                    onPressed: () {
+                      reservationController.changeSpotFilter(3);
+                    },
+                    buttonbackgroundColor: Mycolors.blue,
+                    textColor: Mycolors.white,
+                    fontSize: 14,
+                    height: 40,
+                    fontWeight: FontWeight.bold,
+                    width: 100,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.43,
-
-                child: Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                    color: Mycolors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: MyTextField(
+                      controller: dateController,
+                      hintText: "Pilih tanggal",
+                      iconlogo: const Icon(
+                        Icons.calendar_today,
+                        color: Mycolors.blue,
                       ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(14),
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 6,
+                      width: 175,
+                      height: 50,
+                      borderRadius: 24,
+                      isDatePicker: true,
+                      onDateSelected: (formattedDate) {
+                        reservationController.filterByDate(formattedDate);
+                      },
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800,
+                        color: Mycolors.blue,
+                      ),
+                      hintTextStyle: const TextStyle(
+                        fontSize: 15,
+                        color: Mycolors.darkBlue,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                  ),
+                  const SizedBox(width: 10),
+                  Obx(
+                    () =>
+                        reservationController.selectedDate.value != null
+                            ? IconButton(
+                              icon: const Icon(
+                                Icons.close,
+                                color: Mycolors.blue,
+                              ),
+                              onPressed: () {
+                                dateController.clear();
+                                reservationController.clearDateFilter();
+                              },
+                            )
+                            : const SizedBox(width: 0),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: MyTextField(
+                      hintText: "Search",
+                      iconlogo: const Icon(Icons.search, color: Mycolors.blue),
+                      width: 60,
+                      height: 50,
+                      borderRadius: 24,
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                      hintTextStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Mycolors.blue,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
 
-                    children: const [
-                      ReservationCard(
-                        waktu: '08:00-09:00',
-                        tanggal: '03/07/24',
-                        nama: 'Supri',
-                        lapangan: '2',
-                        telp: '088837823323',
-                      ),
-                      SizedBox(height: 14),
-                      ReservationCard(
-                        waktu: '08:00-09:00',
-                        tanggal: '03/07/24',
-                        nama: 'Rusli',
-                        lapangan: '2',
-                        telp: '088837823323',
-                      ),
-                      SizedBox(height: 14),
-                      ReservationCard(
-                        waktu: '08:00-09:00',
-                        tanggal: '03/07/24',
-                        nama: 'Anto',
-                        lapangan: '2',
-                        telp: '088837823323',
-                      ),
-                      SizedBox(height: 14),
-                      ReservationCard(
-                        waktu: '08:00-09:00',
-                        tanggal: '03/07/24',
-                        nama: 'Dimas',
-                        lapangan: '2',
-                        telp: '088837823323',
-                      ),
-                    ],
+              // List of Reservations
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Mycard(
+                    borderRadius: 16,
+                    color: Mycolors.white,
+                    margin: const EdgeInsets.only(top: 5, bottom: 5),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Obx(() {
+                        final filteredList =
+                            reservationController.filteredReservations;
+                        if (reservationController.isLoading.value) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (filteredList.isEmpty) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/dataisempty.jpg',
+                                  width: 150,
+                                ),
+                                const SizedBox(height: 16),
+                                const MyText(
+                                  text: 'Belum ada data reservasi',
+                                  fontSize: 16,
+                                  textcolor: Mycolors.blue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        return ListView.separated(
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                          itemCount: filteredList.length,
+                          separatorBuilder:
+                              (context, index) => const SizedBox(height: 20),
+                          itemBuilder: (context, index) {
+                            final res = filteredList[index];
+                            return ReservationCard(
+                              waktu: res.waktu,
+                              tanggal: res.tanggal,
+                              nama: res.nama,
+                              lapangan: res.lapangan,
+                              telp: res.telp,
+                            );
+                          },
+                        );
+                      }),
+                    ),
                   ),
                 ),
               ),

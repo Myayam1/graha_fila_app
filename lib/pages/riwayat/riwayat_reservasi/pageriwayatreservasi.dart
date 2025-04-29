@@ -29,7 +29,7 @@ class RiwayatReservasi extends StatelessWidget {
                       Icons.arrow_back_ios_new_rounded,
                       color: Mycolors.blue,
                     ),
-                    onPressed: () {},
+                    onPressed: () {Get.toNamed(AppRoutes.dashboardLapangan);},
                   ),
                 ],
               ),
