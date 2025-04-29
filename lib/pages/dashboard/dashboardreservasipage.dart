@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/myimgbtn.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
 import 'package:grafil_app/widget/mytext.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardReservasiPage extends StatelessWidget {
   const DashboardReservasiPage({Key? key}) : super(key: key);
@@ -19,12 +23,30 @@ class DashboardReservasiPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const MyText(
-                text: 'Dashboard',
-                fontSize: 24,
-                textcolor: Mycolors.blue,
-                fontWeight: FontWeight.w800,
-              ),
+              
+              Row(
+                  children: [
+                    const MyText(
+                      text: 'Dashboard',
+                      fontSize: 24,
+                      textcolor: Mycolors.blue,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: Icon(Icons.logout),color: Mycolors.darkBlue,
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.remove(
+                          'token',
+                        ); 
+                        Get.offAllNamed(
+                          AppRoutes.login,
+                        );
+                      },
+                    ),
+                  ],
+                ),
 
               const SizedBox(height: 16),
 
@@ -120,52 +142,40 @@ class DashboardReservasiPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: MyButton(
-                      text: 'Lapangan',
-                      onPressed: () {},
-                      buttonbackgroundColor: Mycolors.background,
-                      textColor: Mycolors.blue,
-                      borderRadius: 28,
-                      isOutlined: true,
-                      outlineColor: Mycolors.blue,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: MyButton(
-                      text: 'Reservasi',
-                      onPressed: () {},
-                      buttonbackgroundColor: Mycolors.blue,
-                      textColor: Mycolors.white,
-                      borderRadius: 28,
-                    ),
-                  ),
-                ],
-              ),
+
               const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MyImageButton(
                     imagePath: 'assets/images/logolapangan1.png',
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(
+                          AppRoutes.addReservasi,
+                        );
+                    },
                     width: 105,
                     height: 100,
                     borderRadius: 20,
                   ),
                   MyImageButton(
                     imagePath: 'assets/images/logolapangan2.png',
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(
+                          AppRoutes.addReservasi,
+                        );
+                    },
                     width: 105,
                     height: 100,
                     borderRadius: 20,
                   ),
                   MyImageButton(
                     imagePath: 'assets/images/logolapangan3.png',
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(
+                          AppRoutes.addReservasi,
+                        );
+                    },
                     width: 105,
                     height: 100,
                     borderRadius: 20,

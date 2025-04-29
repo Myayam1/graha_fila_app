@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:grafil_app/bindings/addreservation_binding.dart';
 import 'package:grafil_app/bindings/forgotpass_binding.dart';
 import 'package:grafil_app/bindings/login_binding.dart';
 import 'package:grafil_app/bindings/newpassword_binding.dart';
@@ -9,7 +10,6 @@ import 'package:grafil_app/pages/authentication/forgotPassword/forgotpasswordpag
 import 'package:grafil_app/pages/authentication/newpassword/newpasswordpage.dart';
 import 'package:grafil_app/pages/authentication/verification/verificationpage.dart';
 import 'package:grafil_app/pages/authentication/loadingpage.dart';
-import 'package:grafil_app/pages/dashboard/dashboardlapangan.dart';
 import 'package:grafil_app/pages/dashboard/dashboardreservasipage.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan1.dart';
 import 'package:grafil_app/pages/detail_lapangan/reservasilapangan2.dart';
@@ -33,7 +33,6 @@ class AppRoutes {
   static const forgotPassword = '/forgot/password';
   static const newPassword = '/new/password';
   static const verification = '/verification';
-  static const dashboardLapangan = '/dashboard/lapangan';
   static const dashboardReservasi = '/dashboard/reservasi';
   static const reservasi1 = '/reservasi/lapangan1';
   static const reservasi2 = '/reservasi/lapangan2';
@@ -90,14 +89,12 @@ class AppRoutes {
       binding: VerificationBinding()
       ),
 
-    GetPage(
-      name: AppRoutes.dashboardLapangan, 
-      page: () => DashboardLapanganPage()
-      ),
 
     GetPage(
       name: AppRoutes.dashboardReservasi, 
-      page: () => DashboardReservasiPage()
+      page: () => DashboardReservasiPage(),
+      transition: Transition.noTransition,
+
       ),
 
     GetPage(
@@ -141,7 +138,8 @@ class AppRoutes {
 
     GetPage(
       name: AppRoutes.addReservasi, 
-      page: () => AddReservationPage()
+      page: () => AddReservationPage(),
+      binding: ReservationBinding()
       ),
 
     GetPage(
@@ -162,7 +160,10 @@ class AppRoutes {
       transition: Transition.noTransition,
       ),
 
-    GetPage(name: AppRoutes.loading, page: () => LoadingPage()),
+    GetPage(
+      name: AppRoutes.loading, 
+      page: () => LoadingPage()
+      ),
 
 
   ];

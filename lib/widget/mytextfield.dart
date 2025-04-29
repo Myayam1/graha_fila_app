@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +23,8 @@ class MyTextField extends StatefulWidget {
   final bool? hasOutline;
   final Color? outlineColor;
   final double? outlineWidth;
+  final TextInputType? keyboardType; 
+  final List<TextInputFormatter>? inputFormatters; 
 
   const MyTextField({
     super.key,
@@ -43,6 +46,8 @@ class MyTextField extends StatefulWidget {
     this.hasOutline,
     this.outlineColor,
     this.outlineWidth,
+    this.keyboardType, 
+    this.inputFormatters,
   });
 
   @override
@@ -80,6 +85,8 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Center(
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
+          keyboardType: widget.keyboardType, // Gunakan keyboard type
+          inputFormatters: widget.inputFormatters,
           obscureText: widget.obscureText,
           style:
               widget.textStyle ??
