@@ -6,7 +6,7 @@ import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
-import 'package:grafil_app/widget/myriwayatreservasi.dart';
+
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -143,8 +143,9 @@ class RiwayatReservasiPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 0),
-                    child: MyTextFieldRiwayat(
+                    child: MyTextField(
                       controller: dateController,
+                       isRiwayat: true,
                       hintText: "Pilih tanggal",
                       iconlogo: const Icon(
                         Icons.calendar_today,
@@ -220,7 +221,7 @@ class RiwayatReservasiPage extends StatelessWidget {
                       child: Obx(() {
                         final filteredList =
                             riwayatReservasiController
-                                .filteredReservations; // Changed to RiwayatReservasiController
+                                .filteredReservations; 
                         if (riwayatReservasiController.isLoading.value) {
                           return const Center(
                             child: CircularProgressIndicator(),

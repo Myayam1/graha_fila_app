@@ -26,7 +26,10 @@ class MyTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final bool? digitsOnly;
   final Function(String)? onDateSelected;
-  final Function(String)? onChange; 
+  final Function(String)? onChange;
+
+  /// Jika true, maka date picker membolehkan memilih tanggal dari masa lalu (untuk riwayat)
+  final bool isRiwayat;
 
   const MyTextField({
     super.key,
@@ -51,7 +54,8 @@ class MyTextField extends StatefulWidget {
     this.keyboardType,
     this.digitsOnly,
     this.onDateSelected,
-    this.onChange, 
+    this.onChange,
+    this.isRiwayat = false,
   });
 
   @override
@@ -70,13 +74,12 @@ class _MyTextFieldState extends State<MyTextField> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(widget.borderRadius),
-        border:
-            (widget.hasOutline ?? false)
-                ? Border.all(
-                  color: widget.outlineColor ?? Mycolors.grey,
-                  width: widget.outlineWidth ?? 1.5,
-                )
-                : null,
+        border: (widget.hasOutline ?? false)
+            ? Border.all(
+                color: widget.outlineColor ?? Mycolors.grey,
+                width: widget.outlineWidth ?? 1.5,
+              )
+            : null,
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -89,73 +92,67 @@ class _MyTextFieldState extends State<MyTextField> {
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
           obscureText: widget.obscureText,
-          keyboardType:
-              widget.keyboardType ??
+          keyboardType: widget.keyboardType ??
               (widget.digitsOnly == true
                   ? TextInputType.number
                   : TextInputType.text),
-          inputFormatters:
-              widget.digitsOnly == true
-                  ? [FilteringTextInputFormatter.digitsOnly]
-                  : null,
-          style:
-              widget.textStyle ??
+          inputFormatters: widget.digitsOnly == true
+              ? [FilteringTextInputFormatter.digitsOnly]
+              : null,
+          style: widget.textStyle ??
               GoogleFonts.montserrat(
                 color: widget.textcolor ?? Colors.black,
                 fontSize: 14,
                 fontWeight: widget.fontWeight ?? FontWeight.normal,
               ),
           readOnly: widget.isDatePicker,
-          onChanged: widget.onChange, 
-          onTap:
-              widget.isDatePicker
-                  ? () async {
-                    DateTime now = DateTime.now();
-                    DateTime initialDate = selectedDate ?? now;
+          onChanged: widget.onChange,
+          onTap: widget.isDatePicker
+              ? () async {
+                  DateTime now = DateTime.now();
+                  DateTime initialDate = selectedDate ?? now;
 
-                    DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: initialDate,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2100),
-                      builder: (context, child) {
-                        return Theme(
-                          data: ThemeData(
-                            colorScheme: ColorScheme.light(
-                              primary: Mycolors.blue,
-                              onPrimary: Mycolors.background,
-                              onSurface: Mycolors.darkBlue,
-                            ),
-                            textButtonTheme: TextButtonThemeData(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Mycolors.darkBlue,
-                              ),
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: initialDate,
+                    firstDate: widget.isRiwayat ? DateTime(1900) : DateTime.now(),
+                    lastDate: widget.isRiwayat ? now : DateTime(2100),
+                    builder: (context, child) {
+                      return Theme(
+                        data: ThemeData(
+                          colorScheme: ColorScheme.light(
+                            primary: Mycolors.blue,
+                            onPrimary: Mycolors.background,
+                            onSurface: Mycolors.darkBlue,
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Mycolors.darkBlue,
                             ),
                           ),
-                          child: child!,
-                        );
-                      },
-                    );
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
 
-                    if (pickedDate != null) {
-                      String formattedDate = DateFormat(
-                        'dd-MM-yyyy',
-                      ).format(pickedDate);
-                      setState(() {
-                        selectedDate = pickedDate;
-                        widget.controller?.text = formattedDate;
-                      });
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        DateFormat('dd-MM-yyyy').format(pickedDate);
+                    setState(() {
+                      selectedDate = pickedDate;
+                      widget.controller?.text = formattedDate;
+                    });
 
-                      if (widget.onDateSelected != null) {
-                        widget.onDateSelected!(formattedDate);
-                      }
+                    if (widget.onDateSelected != null) {
+                      widget.onDateSelected!(formattedDate);
                     }
                   }
-                  : null,
+                }
+              : null,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle:
-                widget.hintTextStyle ??
+            hintStyle: widget.hintTextStyle ??
                 GoogleFonts.montserrat(
                   color: widget.textcolor ?? Colors.black,
                   fontSize: 14,
