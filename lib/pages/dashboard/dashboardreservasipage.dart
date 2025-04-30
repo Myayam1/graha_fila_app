@@ -12,8 +12,9 @@ import 'package:grafil_app/widget/mytextfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardReservasiPage extends StatelessWidget {
-  final reservationController = Get.find<ReservationController>();
+  final reservationController = Get.find<DetailReservationController>();
   final TextEditingController dateController = TextEditingController();
+    final TextEditingController searchController = TextEditingController();
 
   DashboardReservasiPage({Key? key}) : super(key: key);
 
@@ -26,7 +27,7 @@ class DashboardReservasiPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [  
+            children: [
               Row(
                 children: [
                   const MyText(
@@ -48,7 +49,6 @@ class DashboardReservasiPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-          
               Mycard(
                 width: double.infinity,
                 borderRadius: 16,
@@ -125,77 +125,91 @@ class DashboardReservasiPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyButton(
-                    text: 'All',
-                    onPressed: () {
-                      reservationController.changeSpotFilter(0);
-                    },
-                    buttonbackgroundColor: Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 80,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+              Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MyButton(
+                      text: 'All',
+                      onPressed: () {
+                        reservationController.changeSpotFilter(0);
+                      },
+                      buttonbackgroundColor:
+                          reservationController.selectedSpotId.value == 0
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 80,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  MyButton(
-                    text: 'Lap.1',
-                    onPressed: () {
-                      reservationController.changeSpotFilter(1);
-                    },
-                    buttonbackgroundColor: Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 100,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+                    const SizedBox(width: 10),
+                    MyButton(
+                      text: 'Lap.1',
+                      onPressed: () {
+                        reservationController.changeSpotFilter(1);
+                      },
+                      buttonbackgroundColor:
+                          reservationController.selectedSpotId.value == 1
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  MyButton(
-                    text: 'Lap.2',
-                    onPressed: () {
-                      reservationController.changeSpotFilter(2);
-                    },
-                    buttonbackgroundColor: Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 100,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+                    const SizedBox(width: 10),
+                    MyButton(
+                      text: 'Lap.2',
+                      onPressed: () {
+                        reservationController.changeSpotFilter(2);
+                      },
+                      buttonbackgroundColor:
+                          reservationController.selectedSpotId.value == 2
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  MyButton(
-                    text: 'Lap.3',
-                    onPressed: () {
-                      reservationController.changeSpotFilter(3);
-                    },
-                    buttonbackgroundColor: Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 100,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+                    const SizedBox(width: 10),
+                    MyButton(
+                      text: 'Lap.3',
+                      onPressed: () {
+                        reservationController.changeSpotFilter(3);
+                      },
+                      buttonbackgroundColor:
+                          reservationController.selectedSpotId.value == 3
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 15),
               Row(
@@ -247,6 +261,7 @@ class DashboardReservasiPage extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: MyTextField(
+                      controller: searchController,
                       hintText: "Search",
                       iconlogo: const Icon(Icons.search, color: Mycolors.blue),
                       width: 60,
@@ -258,13 +273,16 @@ class DashboardReservasiPage extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Mycolors.blue,
                       ),
+                      onChange: (value) {
+                        reservationController.updateSearchQuery(value);
+                      },
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
 
-              // List of Reservations
+              
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:intl/intl.dart';
 
-class MyTextField extends StatefulWidget {
+class MyTextFieldRiwayat extends StatefulWidget {
   final TextEditingController? controller;
   final String? hintText;
   final bool obscureText;
@@ -23,12 +23,12 @@ class MyTextField extends StatefulWidget {
   final bool? hasOutline;
   final Color? outlineColor;
   final double? outlineWidth;
-  final List<TextInputFormatter>? inputFormatters; 
+  final TextInputType? keyboardType;
   final bool? digitsOnly;
   final Function(String)? onDateSelected;
-  final Function(String)? onChange; 
+   final Function(String)? onChange; 
 
-  const MyTextField({
+  const MyTextFieldRiwayat({
     super.key,
     this.controller,
     this.hintText,
@@ -48,7 +48,6 @@ class MyTextField extends StatefulWidget {
     this.hasOutline,
     this.outlineColor,
     this.outlineWidth,
-    this.inputFormatters,
     this.keyboardType,
     this.digitsOnly,
     this.onDateSelected,
@@ -56,10 +55,10 @@ class MyTextField extends StatefulWidget {
   });
 
   @override
-  State<MyTextField> createState() => _MyTextFieldState();
+  State<MyTextFieldRiwayat> createState() => _MyTextFieldRiwayatState();
 }
 
-class _MyTextFieldState extends State<MyTextField> {
+class _MyTextFieldRiwayatState extends State<MyTextFieldRiwayat> {
   DateTime? selectedDate;
 
   @override
@@ -89,8 +88,6 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Center(
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
-          keyboardType: widget.keyboardType, // Gunakan keyboard type
-          inputFormatters: widget.inputFormatters,
           obscureText: widget.obscureText,
           keyboardType:
               widget.keyboardType ??
@@ -109,7 +106,7 @@ class _MyTextFieldState extends State<MyTextField> {
                 fontWeight: widget.fontWeight ?? FontWeight.normal,
               ),
           readOnly: widget.isDatePicker,
-          onChanged: widget.onChange, 
+           onChanged: widget.onChange,
           onTap:
               widget.isDatePicker
                   ? () async {
@@ -119,8 +116,10 @@ class _MyTextFieldState extends State<MyTextField> {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
                       initialDate: initialDate,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2100),
+                      firstDate: DateTime(
+                        1900,
+                      ), // Set a very old date for the first selectable date
+                      lastDate: now, // Only allow selecting up until today
                       builder: (context, child) {
                         return Theme(
                           data: ThemeData(
@@ -155,6 +154,7 @@ class _MyTextFieldState extends State<MyTextField> {
                     }
                   }
                   : null,
+
           decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle:

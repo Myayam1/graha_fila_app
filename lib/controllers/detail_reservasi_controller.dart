@@ -3,11 +3,12 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:grafil_app/pages/detail_lapangan/detail_service.dart';
 import 'package:grafil_app/pages/detail_lapangan/model_reservasi.dart';
 
-class ReservationController extends GetxController {
+class DetailReservationController extends GetxController {
   var reservations = <ReservationModel>[].obs;
   var isLoading = false.obs;
   var selectedSpotId = 0.obs;
   var selectedDate = Rx<String?>(null);
+  var searchQuery = ''.obs; 
 
   @override
   void onInit() {
@@ -55,30 +56,57 @@ class ReservationController extends GetxController {
     update();
   }
 
+
+  void updateSearchQuery(String query) {
+    searchQuery.value = query;
+    update();
+  }
+
   List<ReservationModel> get filteredReservations {
     List<ReservationModel> result = reservations;
 
+    // Apply date filter
     if (selectedDate.value != null && selectedDate.value!.isNotEmpty) {
       final parts = selectedDate.value!.split('-');
       if (parts.length == 3) {
         final apiDateFormat = "${parts[2]}-${parts[1]}-${parts[0]}";
 
-        result =
-            result
-                .where((reservation) => reservation.tanggal == apiDateFormat)
-                .toList();
+        result = result
+            .where((reservation) => reservation.tanggal == apiDateFormat)
+            .toList();
       }
     }
 
+    // Apply spot filter
     if (selectedSpotId.value != 0) {
-      result =
-          result
-              .where(
-                (reservasi) =>
-                    int.parse(reservasi.lapangan) == selectedSpotId.value,
-              )
-              .toList();
+      result = result
+          .where((reservasi) => int.parse(reservasi.lapangan) == selectedSpotId.value)
+          .toList();
     }
+
+    // Apply search filter by name or phone number (case insensitive)
+    if (searchQuery.value.isNotEmpty) {
+      String query = searchQuery.value.toLowerCase();
+      result = result.where((reservation) {
+        return reservation.nama.toLowerCase().contains(query) || 
+               reservation.telp.toLowerCase().contains(query);
+      }).toList();
+    }
+   
+    DateTime now = DateTime.now();
+    result = result.where((reservation) {
+      DateTime reservationDateTime = DateTime.parse(
+        '${reservation.tanggal} ${reservation.waktu}',
+      );
+
+      if (reservationDateTime.year == now.year &&
+          reservationDateTime.month == now.month &&
+          reservationDateTime.day == now.day) {
+        return reservationDateTime.isAfter(now);
+      }
+      
+      return true;
+    }).toList();
 
     return result;
   }
