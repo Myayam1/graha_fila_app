@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:grafil_app/bindings/addreservation_binding.dart';
 import 'package:grafil_app/bindings/detail_reservasi_bindings.dart';
 import 'package:grafil_app/bindings/forgotpass_binding.dart';
 import 'package:grafil_app/bindings/login_binding.dart';
@@ -31,7 +32,6 @@ class AppRoutes {
   static const forgotPassword = '/forgot/password';
   static const newPassword = '/new/password';
   static const verification = '/verification';
-  static const dashboardLapangan = '/dashboard/lapangan';
   static const dashboardReservasi = '/dashboard/reservasi';
   static const reservasi1 = '/reservasi/lapangan1';
   static const reservasi2 = '/reservasi/lapangan2';
@@ -94,7 +94,6 @@ class AppRoutes {
       page: () => DashboardReservasiPage(),
       transition: Transition.noTransition,
       binding: DetailReservationBinding(),
-
       ),
 
    
@@ -126,7 +125,8 @@ class AppRoutes {
 
     GetPage(
       name: AppRoutes.addReservasi, 
-      page: () => AddReservationPage()
+      page: () => AddReservationPage(),
+      binding: ReservationBinding()
       ),
 
     GetPage(
@@ -147,7 +147,10 @@ class AppRoutes {
       transition: Transition.noTransition,
       ),
 
-    GetPage(name: AppRoutes.loading, page: () => LoadingPage()),
+    GetPage(
+      name: AppRoutes.loading, 
+      page: () => LoadingPage()
+      ),
 
 
   ];

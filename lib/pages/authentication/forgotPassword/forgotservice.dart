@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ForgotPasswordService {
   static const baseUrl =
-      'https://5e00-103-164-229-141.ngrok-free.app/api/password';
+      'https://9a45-160-22-25-43.ngrok-free.app/api/password';
 
   // === Request Kode Verifikasi ===
   static Future<ForgotPasswordResponse> requestCode(String email) async {

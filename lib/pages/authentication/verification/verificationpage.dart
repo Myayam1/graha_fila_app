@@ -16,6 +16,7 @@ class Verificationpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final verificationController = Get.find<VerifficationController>();
+    final forgotpasswordControl = Get.find<ForgotPasswordController>();
 
     return Scaffold(
       body: SafeArea(
@@ -117,6 +118,7 @@ class Verificationpage extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     onTap: () {
                       // logika kirim ulang di sini
+                      forgotpasswordControl.sendResetCode();
                     },
                   ),
                 ],

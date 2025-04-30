@@ -125,7 +125,6 @@ class DashboardReservasiPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-
               Obx(
                 () => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,7 +212,6 @@ class DashboardReservasiPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-
               Row(
                 children: [
                   Padding(
