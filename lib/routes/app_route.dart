@@ -4,6 +4,7 @@ import 'package:grafil_app/bindings/forgotpass_binding.dart';
 import 'package:grafil_app/bindings/login_binding.dart';
 import 'package:grafil_app/bindings/newpassword_binding.dart';
 import 'package:grafil_app/bindings/register_binding.dart';
+import 'package:grafil_app/bindings/riwayat_bindings.dart';
 import 'package:grafil_app/bindings/splashscreen_binding.dart';
 import 'package:grafil_app/bindings/verification_binding.dart';
 import 'package:grafil_app/pages/authentication/forgotPassword/forgotpasswordpage.dart';
@@ -92,7 +93,7 @@ class AppRoutes {
       name: AppRoutes.dashboardReservasi, 
       page: () => DashboardReservasiPage(),
       transition: Transition.noTransition,
-      binding: ReservationBinding(),
+      binding: DetailReservationBinding(),
 
       ),
 
@@ -118,8 +119,9 @@ class AppRoutes {
 
     GetPage(
       name: AppRoutes.pageRiwayat, 
-      page: () => RiwayatReservasi(),
+      page: () => RiwayatReservasiPage(),
       transition: Transition.noTransition,
+      binding: RiwayatReservasiBinding()
       ),
 
     GetPage(
