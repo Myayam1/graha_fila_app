@@ -8,6 +8,7 @@ class DetailReservationController extends GetxController {
   var isLoading = false.obs;
   var selectedSpotId = 0.obs;
   var selectedDate = Rx<String?>(null);
+  var searchQuery = ''.obs; 
 
   @override
   void onInit() {
@@ -55,9 +56,16 @@ class DetailReservationController extends GetxController {
     update();
   }
 
+
+  void updateSearchQuery(String query) {
+    searchQuery.value = query;
+    update();
+  }
+
   List<ReservationModel> get filteredReservations {
     List<ReservationModel> result = reservations;
 
+    // Apply date filter
     if (selectedDate.value != null && selectedDate.value!.isNotEmpty) {
       final parts = selectedDate.value!.split('-');
       if (parts.length == 3) {
@@ -69,12 +77,21 @@ class DetailReservationController extends GetxController {
       }
     }
 
+    // Apply spot filter
     if (selectedSpotId.value != 0) {
       result = result
           .where((reservasi) => int.parse(reservasi.lapangan) == selectedSpotId.value)
           .toList();
     }
 
+    // Apply search filter by name or phone number (case insensitive)
+    if (searchQuery.value.isNotEmpty) {
+      String query = searchQuery.value.toLowerCase();
+      result = result.where((reservation) {
+        return reservation.nama.toLowerCase().contains(query) || 
+               reservation.telp.toLowerCase().contains(query);
+      }).toList();
+    }
    
     DateTime now = DateTime.now();
     result = result.where((reservation) {
@@ -82,13 +99,11 @@ class DetailReservationController extends GetxController {
         '${reservation.tanggal} ${reservation.waktu}',
       );
 
-      
       if (reservationDateTime.year == now.year &&
           reservationDateTime.month == now.month &&
           reservationDateTime.day == now.day) {
         return reservationDateTime.isAfter(now);
       }
-
       
       return true;
     }).toList();

@@ -26,6 +26,7 @@ class MyTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final bool? digitsOnly;
   final Function(String)? onDateSelected;
+  final Function(String)? onChange; 
 
   const MyTextField({
     super.key,
@@ -50,6 +51,7 @@ class MyTextField extends StatefulWidget {
     this.keyboardType,
     this.digitsOnly,
     this.onDateSelected,
+    this.onChange, 
   });
 
   @override
@@ -104,6 +106,7 @@ class _MyTextFieldState extends State<MyTextField> {
                 fontWeight: widget.fontWeight ?? FontWeight.normal,
               ),
           readOnly: widget.isDatePicker,
+          onChanged: widget.onChange, 
           onTap:
               widget.isDatePicker
                   ? () async {

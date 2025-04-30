@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DashboardReservasiPage extends StatelessWidget {
   final reservationController = Get.find<DetailReservationController>();
   final TextEditingController dateController = TextEditingController();
+    final TextEditingController searchController = TextEditingController();
 
   DashboardReservasiPage({Key? key}) : super(key: key);
 
@@ -262,6 +263,7 @@ class DashboardReservasiPage extends StatelessWidget {
                   const SizedBox(width: 10),
                   Expanded(
                     child: MyTextField(
+                      controller: searchController,
                       hintText: "Search",
                       iconlogo: const Icon(Icons.search, color: Mycolors.blue),
                       width: 60,
@@ -273,13 +275,16 @@ class DashboardReservasiPage extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Mycolors.blue,
                       ),
+                      onChange: (value) {
+                        reservationController.updateSearchQuery(value);
+                      },
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
 
-              // List of Reservations
+              
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),

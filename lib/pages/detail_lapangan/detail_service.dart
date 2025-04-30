@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ReservationService {
-  static const String url = 'https://2f16-114-10-5-49.ngrok-free.app/api/reservation';
+  static const String url = 'https://fdae-2404-c0-7440-00-6c31-f3d6.ngrok-free.app/api/reservation';
 
   static Future<List<ReservationModel>> fetchReservations() async {
     try {

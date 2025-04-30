@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grafil_app/controllers/riwayat_controller.dart';
+import 'package:grafil_app/controllers/riwayat_reservasi_controller.dart';
 import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
@@ -12,8 +12,9 @@ import 'package:grafil_app/widget/mytextfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RiwayatReservasiPage extends StatelessWidget {
-  final riwayatReservasiController = Get.find<RiwayatReservationController>();  
+  final riwayatReservasiController = Get.find<RiwayatReservationController>();
   final TextEditingController dateController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
   RiwayatReservasiPage({Key? key}) : super(key: key);
 
@@ -48,89 +49,94 @@ class RiwayatReservasiPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-             
               const SizedBox(height: 16),
 
-            Obx(() =>   Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyButton(
-                    text: 'All',
-                    onPressed: () {
-                      riwayatReservasiController.changeSpotFilter(0); 
-                    },
-                    buttonbackgroundColor: riwayatReservasiController.selectedSpotId.value == 0
-                        ? Mycolors.darkBlue
-                        : Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 80,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+              Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    MyButton(
+                      text: 'All',
+                      onPressed: () {
+                        riwayatReservasiController.changeSpotFilter(0);
+                      },
+                      buttonbackgroundColor:
+                          riwayatReservasiController.selectedSpotId.value == 0
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 80,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  MyButton(
-                    text: 'Lap.1',
-                    onPressed: () {
-                      riwayatReservasiController.changeSpotFilter(1);  
-                    },
-                    buttonbackgroundColor: riwayatReservasiController.selectedSpotId.value == 1
-                        ? Mycolors.darkBlue
-                        : Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 100,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+                    const SizedBox(width: 10),
+                    MyButton(
+                      text: 'Lap.1',
+                      onPressed: () {
+                        riwayatReservasiController.changeSpotFilter(1);
+                      },
+                      buttonbackgroundColor:
+                          riwayatReservasiController.selectedSpotId.value == 1
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  MyButton(
-                    text: 'Lap.2',
-                    onPressed: () {
-                      riwayatReservasiController.changeSpotFilter(2);  
-                    },
-                    buttonbackgroundColor: riwayatReservasiController.selectedSpotId.value == 2
-                        ? Mycolors.darkBlue
-                        : Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 100,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+                    const SizedBox(width: 10),
+                    MyButton(
+                      text: 'Lap.2',
+                      onPressed: () {
+                        riwayatReservasiController.changeSpotFilter(2);
+                      },
+                      buttonbackgroundColor:
+                          riwayatReservasiController.selectedSpotId.value == 2
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  MyButton(
-                    text: 'Lap.3',
-                    onPressed: () {
-                      riwayatReservasiController.changeSpotFilter(3); 
-                    },
-                    buttonbackgroundColor: riwayatReservasiController.selectedSpotId.value == 3
-                        ? Mycolors.darkBlue
-                        : Mycolors.blue,
-                    textColor: Mycolors.white,
-                    fontSize: 14,
-                    height: 40,
-                    fontWeight: FontWeight.bold,
-                    width: 100,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
+                    const SizedBox(width: 10),
+                    MyButton(
+                      text: 'Lap.3',
+                      onPressed: () {
+                        riwayatReservasiController.changeSpotFilter(3);
+                      },
+                      buttonbackgroundColor:
+                          riwayatReservasiController.selectedSpotId.value == 3
+                              ? Mycolors.darkBlue
+                              : Mycolors.blue,
+                      textColor: Mycolors.white,
+                      fontSize: 14,
+                      height: 40,
+                      fontWeight: FontWeight.bold,
+                      width: 100,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                ),
+              ),
               const SizedBox(height: 15),
 
               Row(
@@ -149,7 +155,7 @@ class RiwayatReservasiPage extends StatelessWidget {
                       borderRadius: 24,
                       isDatePicker: true,
                       onDateSelected: (formattedDate) {
-                        riwayatReservasiController.filterByDate(formattedDate);  // Changed to RiwayatReservasiController
+                        riwayatReservasiController.filterByDate(formattedDate);
                       },
                       textStyle: const TextStyle(
                         fontSize: 15,
@@ -174,7 +180,7 @@ class RiwayatReservasiPage extends StatelessWidget {
                               ),
                               onPressed: () {
                                 dateController.clear();
-                                riwayatReservasiController.clearDateFilter();  // Changed to RiwayatReservasiController
+                                riwayatReservasiController.clearDateFilter();
                               },
                             )
                             : const SizedBox(width: 0),
@@ -193,13 +199,15 @@ class RiwayatReservasiPage extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: Mycolors.blue,
                       ),
+                      onChange: (value) {
+                        riwayatReservasiController.updateSearchQuery(value);
+                      },
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
 
-              // List of Reservations
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -211,7 +219,8 @@ class RiwayatReservasiPage extends StatelessWidget {
                       padding: const EdgeInsets.all(5),
                       child: Obx(() {
                         final filteredList =
-                            riwayatReservasiController.filteredReservations;  // Changed to RiwayatReservasiController
+                            riwayatReservasiController
+                                .filteredReservations; // Changed to RiwayatReservasiController
                         if (riwayatReservasiController.isLoading.value) {
                           return const Center(
                             child: CircularProgressIndicator(),

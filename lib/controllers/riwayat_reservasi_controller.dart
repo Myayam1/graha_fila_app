@@ -117,7 +117,7 @@ class RiwayatReservationController extends GetxController {
   var isLoading = false.obs;
   var selectedSpotId = 0.obs;
   var selectedDate = Rx<String?>(null);
-
+   var searchQuery = ''.obs; 
   var pastReservations = <ReservationModel>[].obs;
   var upcomingReservations = <ReservationModel>[].obs;
 
@@ -206,6 +206,10 @@ class RiwayatReservationController extends GetxController {
     selectedDate.value = null;
     update();
   }
+    void updateSearchQuery(String query) {
+    searchQuery.value = query;
+    update();
+  }
 
   List<ReservationModel> get filteredReservations {
     List<ReservationModel> result = pastReservations;
@@ -220,6 +224,13 @@ class RiwayatReservationController extends GetxController {
             .toList();
       }
     }
+        if (searchQuery.value.isNotEmpty) {
+      String query = searchQuery.value.toLowerCase();
+      result = result.where((reservation) {
+        return reservation.nama.toLowerCase().contains(query) || 
+               reservation.telp.toLowerCase().contains(query);
+      }).toList();
+    }
 
     if (selectedSpotId.value != 0) {
       result = result
@@ -232,6 +243,7 @@ class RiwayatReservationController extends GetxController {
 
     return result;
   }
+  
 
   void changeSpotFilter(int spotId) {
     selectedSpotId.value = spotId;
