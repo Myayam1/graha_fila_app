@@ -112,8 +112,9 @@ class AppRoutes {
 
     GetPage(
       name: AppRoutes.pageRiwayat, 
-      page: () => RiwayatReservasi(),
+      page: () => RiwayatReservasiPage(),
       transition: Transition.noTransition,
+      binding: RiwayatReservasiBinding()
       ),
 
     GetPage(
