@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:grafil_app/pages/detail_lapangan/detail_service.dart';
 import 'package:grafil_app/pages/detail_lapangan/model_reservasi.dart';
 
