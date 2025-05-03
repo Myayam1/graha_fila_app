@@ -217,6 +217,7 @@ class DashboardReservasiPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 0),
                     child: MyTextField(
+                      isRiwayat: false,
                       controller: dateController,
                       hintText: "Pilih tanggal",
                       iconlogo: const Icon(
