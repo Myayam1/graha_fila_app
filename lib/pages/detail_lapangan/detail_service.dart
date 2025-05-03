@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:grafil_app/API_config.dart';
 import 'package:grafil_app/pages/detail_lapangan/model_reservasi.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ReservationService {
-  static const String url = 'https://1141-160-22-25-43.ngrok-free.app/api/reservation';
+  static String url = ApiConfig.baseUrl + '/api/reservation';
 
   static Future<List<ReservationModel>> fetchReservations() async {
     try {

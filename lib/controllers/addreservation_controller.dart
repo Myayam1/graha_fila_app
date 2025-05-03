@@ -4,7 +4,7 @@ import 'package:grafil_app/pages/reservasi/API/addreservasi_model.dart';
 import 'package:grafil_app/pages/reservasi/API/addreservasi_service.dart';
 import 'package:intl/intl.dart';
 
-class ReservationController extends GetxController {
+class AddReservationController extends GetxController {
   final AddReservationService _apiService = Get.put(AddReservationService());
 
   final TextEditingController nameController = TextEditingController();
@@ -203,97 +203,74 @@ class ReservationController extends GetxController {
     }
   }
 
-  Future<void> createReservation() async {
-    if (nameController.text.isEmpty ||
-        phoneController.text.isEmpty ||
-        dateController.text.isEmpty ||
-        selectedDate.value == null) {
-      Get.snackbar(
-        'Validation Error',
-        'Harap lengkapi semua data',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-      return;
-    }
-
-    int paymentAmount;
-    try {
-      
-      String numericValue = paymentController.text.replaceAll(RegExp(r'[^0-9]'), '');
-      
-      if (numericValue.isEmpty) {
-        paymentAmount = defaultAmount.value;
-      } else {
-        paymentAmount = int.parse(numericValue);
-      }
-    } catch (e) {
-      Get.snackbar(
-        'Validation Error',
-        'Jumlah pembayaran harus berupa angka',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-      return;
-    }
-
-    final List<String> selectedTimes = [];
-    timeSlots.forEach((time, slot) {
-      if (slot.status == "selected") {
-        selectedTimes.add(time);
-      }
-    });
-
-    if (selectedTimes.isEmpty) {
-      Get.snackbar(
-        'Validation Error',
-        'Harap pilih minimal satu slot waktu',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-      return;
-    }
-
-    try {
-      isLoading.value = true;
-
-      for (var time in selectedTimes) {
-        final String formattedDate = DateFormat(
-          'yyyy-MM-dd',
-        ).format(selectedDate.value!);
-        final String formattedDateTime =
-            "$formattedDate $time:00";
-
-        final ReservationModel reservation = ReservationModel(
-          name: nameController.text,
-          phone: phoneController.text,
-          spotId: selectedSpotId.value,
-          reservationTime: formattedDateTime,
-          amount: paymentAmount,
-        );
-
-        await _apiService.createReservation(reservation);
-      }
-
-      Get.snackbar(
-        'Success',
-        'Reservasi berhasil ditambahkan untuk ${selectedTimes.join(", ")}!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-
-      resetForm();
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to create reservation: $e',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    } finally {
-      isLoading.value = false;
-    }
+Future<void> createReservation() async {
+  if (nameController.text.isEmpty ||
+      phoneController.text.isEmpty ||
+      dateController.text.isEmpty ||
+      selectedDate.value == null) {
+    Get.snackbar(
+      'Validation Error',
+      'Harap lengkapi semua data',
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+    return;
   }
+
+  final List<String> selectedTimes = [];
+  timeSlots.forEach((time, slot) {
+    if (slot.status == "selected") {
+      selectedTimes.add(time);
+    }
+  });
+
+  if (selectedTimes.isEmpty) {
+    Get.snackbar(
+      'Validation Error',
+      'Harap pilih minimal satu slot waktu',
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+    return;
+  }
+
+  try {
+    isLoading.value = true;
+
+    for (var time in selectedTimes) {
+      final String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate.value!);
+      final String formattedDateTime = "$formattedDate $time:00";
+
+      final AddReservationModel reservation = AddReservationModel(
+        name: nameController.text,
+        phone: phoneController.text,
+        spotId: selectedSpotId.value,
+        reservationTime: formattedDateTime,
+        amount: hourlyRate, 
+      );
+
+      await _apiService.createReservation(reservation);
+    }
+
+    Get.snackbar(
+      'Success',
+      'Reservasi berhasil ditambahkan untuk ${selectedTimes.join(", ")}!',
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
+
+    resetForm();
+  } catch (e) {
+    Get.snackbar(
+      'Error',
+      'Failed to create reservation: $e',
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+  } finally {
+    isLoading.value = false;
+  }
+}
 
   void resetForm() {
     nameController.clear();

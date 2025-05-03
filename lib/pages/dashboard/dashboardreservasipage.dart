@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:grafil_app/controllers/detail_reservasi_controller.dart';
+import 'package:grafil_app/pages/dashboard/totalPendapatan/controller.dart';
 import 'package:grafil_app/routes/app_route.dart';
 import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
@@ -12,7 +13,8 @@ import 'package:grafil_app/widget/mytextfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardReservasiPage extends StatelessWidget {
-  final reservationController = Get.find<ReservationController>();
+  final reservationController = Get.find<DetailReservationController>();
+  final paymentController = Get.put(PaymentController());
   final TextEditingController dateController = TextEditingController();
 
   DashboardReservasiPage({Key? key}) : super(key: key);
@@ -21,12 +23,21 @@ class DashboardReservasiPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Mycolors.background,
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(AppRoutes.addReservasi);
+        },
+        backgroundColor: Mycolors.blue,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(200)),
+        child: const Icon(Icons.add, color: Mycolors.white),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [  
+            children: [
               Row(
                 children: [
                   const MyText(
@@ -48,7 +59,6 @@ class DashboardReservasiPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-          
               Mycard(
                 width: double.infinity,
                 borderRadius: 16,
@@ -76,20 +86,54 @@ class DashboardReservasiPage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
-                              children: const [
-                                MyText(
+                              children: [
+                                const MyText(
                                   text: 'Graha Fila Sport',
                                   fontSize: 17,
                                   textcolor: Mycolors.blue,
                                   fontWeight: FontWeight.w800,
                                 ),
-                                MyText(
+                                const MyText(
                                   text: 'Badminton',
                                   fontSize: 17,
                                   textcolor: Mycolors.blue,
                                   fontWeight: FontWeight.w800,
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 16),
+
+                              //pendapatan hari ini
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    MyText(
+                                      text: 'Pendapatan hari ini',
+                                      fontSize: 15,
+                                      textcolor: Mycolors.grey,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+
+                                    Obx(
+                                      () =>
+                                          paymentController.isLoading.value
+                                              ? const SizedBox(
+                                                height: 15,
+                                                width: 15,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      color: Mycolors.darkBlue,
+                                                    ),
+                                              )
+                                              : MyText(
+                                                text:
+                                                    'Rp ${paymentController.formatCurrency(paymentController.todayIncome.value)}',
+                                                fontSize: 15,
+                                                textcolor: Mycolors.darkBlue,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),

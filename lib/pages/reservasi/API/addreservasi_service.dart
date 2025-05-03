@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:grafil_app/API_config.dart';
 import 'package:grafil_app/pages/reservasi/API/addreservasi_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -6,9 +7,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddReservationService extends GetxService {
-  final String baseUrl = 'https://9a45-160-22-25-43.ngrok-free.app';
+  final String baseUrl = ApiConfig.baseUrl;
 
-  Future<List<ReservationModel>> getAllReservations() async {
+  Future<List<AddReservationModel>> getAllReservations() async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/api/reservation'));
 
@@ -16,7 +17,7 @@ class AddReservationService extends GetxService {
         final Map<String, dynamic> data = json.decode(response.body);
         final List<dynamic> reservationsJson = data['reservations'];
         return reservationsJson
-            .map((json) => ReservationModel.fromJson(json))
+            .map((json) => AddReservationModel.fromJson(json))
             .toList();
       } else {
         throw Exception('Failed to load reservations: ${response.statusCode}');
@@ -74,8 +75,8 @@ class AddReservationService extends GetxService {
     }
   }
 
-  Future<ReservationModel> createReservation(
-    ReservationModel reservation,
+  Future<AddReservationModel> createReservation(
+    AddReservationModel reservation,
   ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -96,7 +97,7 @@ class AddReservationService extends GetxService {
         final Map<String, dynamic> data = json.decode(response.body);
 
         if (data.containsKey('reservation')) {
-          return ReservationModel.fromJson(data['reservation']);
+          return AddReservationModel.fromJson(data['reservation']);
         } else {
           return reservation;
         }

@@ -24,8 +24,10 @@ class MyTextField extends StatefulWidget {
   final Color? outlineColor;
   final double? outlineWidth;
   final List<TextInputFormatter>? inputFormatters; 
+  final TextInputType? keyboardType;
   final bool? digitsOnly;
   final Function(String)? onDateSelected;
+  final ValueChanged<String>? onChanged;
 
   const MyTextField({
     super.key,
@@ -51,6 +53,7 @@ class MyTextField extends StatefulWidget {
     this.keyboardType,
     this.digitsOnly,
     this.onDateSelected,
+    this.onChanged
   });
 
   @override
@@ -87,9 +90,8 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Center(
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
-          keyboardType: widget.keyboardType, // Gunakan keyboard type
-          inputFormatters: widget.inputFormatters,
           obscureText: widget.obscureText,
+          onChanged: widget.onChanged,
           keyboardType:
               widget.keyboardType ??
               (widget.digitsOnly == true

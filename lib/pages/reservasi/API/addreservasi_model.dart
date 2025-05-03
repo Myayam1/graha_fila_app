@@ -1,4 +1,4 @@
-class ReservationModel {
+class AddReservationModel {
   int? id;
   int? userId;
   int spotId;
@@ -10,7 +10,7 @@ class ReservationModel {
   String? createdAt;
   String? updatedAt;
 
-  ReservationModel({
+  AddReservationModel({
     this.id,
     this.userId,
     required this.spotId,
@@ -23,8 +23,8 @@ class ReservationModel {
     required this.amount,
   });
 
-  factory ReservationModel.fromJson(Map<String, dynamic> json) {
-    return ReservationModel(
+  factory AddReservationModel.fromJson(Map<String, dynamic> json) {
+    return AddReservationModel(
       id: json['id'],
       userId: json['user_id'],
       spotId: json['spot_id'],
@@ -52,7 +52,7 @@ class ReservationModel {
 
 class TimeSlot {
   final String time;
-  final String status; 
+  final String status;
 
   TimeSlot({
     required this.time,

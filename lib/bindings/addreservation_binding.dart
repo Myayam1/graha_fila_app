@@ -3,10 +3,10 @@ import 'package:grafil_app/controllers/addreservation_controller.dart';
 import 'package:grafil_app/pages/reservasi/API/addreservasi_service.dart';
 
 
-class ReservationBinding implements Bindings {
+class AddReservationBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<AddReservationService>(() => AddReservationService());
-    Get.lazyPut<ReservationController>(() => ReservationController());
+    Get.lazyPut<AddReservationController>(() => AddReservationController());
   }
 }

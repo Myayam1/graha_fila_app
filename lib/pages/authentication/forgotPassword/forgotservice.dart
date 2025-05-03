@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'package:grafil_app/API_config.dart';
 import 'package:grafil_app/pages/authentication/forgotPassword/forgotmodel.dart';
 import 'package:http/http.dart' as http;
 
 class ForgotPasswordService {
   static const baseUrl =
-      'https://9a45-160-22-25-43.ngrok-free.app/api/password';
+      ApiConfig.baseUrl + '/api/password'; 
 
-  // === Request Kode Verifikasi ===
+  
   static Future<ForgotPasswordResponse> requestCode(String email) async {
     final response = await http.post(
       Uri.parse('$baseUrl/request-code'),

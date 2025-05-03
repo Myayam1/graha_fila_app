@@ -10,7 +10,7 @@ import 'package:grafil_app/widget/mytextfield.dart';
 import 'package:grafil_app/widget/mytimebox.dart';
 
 class AddReservationPage extends StatelessWidget {
-  final controller = Get.find<ReservationController>();
+  final controller = Get.find<AddReservationController>();
 
   @override
   Widget build(BuildContext context) {

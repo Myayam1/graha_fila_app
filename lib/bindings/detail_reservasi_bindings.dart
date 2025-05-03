@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:grafil_app/controllers/detail_reservasi_controller.dart';
 
-class ReservationBinding extends Bindings {
+class DetailReservationBiding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ReservationController>(() => ReservationController());
+    Get.lazyPut<DetailReservationController>(() => DetailReservationController());
   }
 }

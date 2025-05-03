@@ -29,7 +29,7 @@ class RiwayatReservasi extends StatelessWidget {
                       Icons.arrow_back_ios_new_rounded,
                       color: Mycolors.blue,
                     ),
-                    onPressed: () {Get.toNamed(AppRoutes.dashboardLapangan);},
+                    onPressed: () {Get.toNamed(AppRoutes.dashboardReservasi);},
                   ),
                 ],
               ),
@@ -51,7 +51,7 @@ class RiwayatReservasi extends StatelessWidget {
                 child: MyButton(
                   text: 'Pendapatan',
                   onPressed: () {
-                    Get.toNamed(AppRoutes.pendapatanlap1);
+                    Get.toNamed(AppRoutes.pendapatanlap);
                   },
                   buttonbackgroundColor: Mycolors.background,
                   textColor: Mycolors.blue,

@@ -5,6 +5,7 @@ import 'package:grafil_app/bindings/forgotpass_binding.dart';
 import 'package:grafil_app/bindings/login_binding.dart';
 import 'package:grafil_app/bindings/newpassword_binding.dart';
 import 'package:grafil_app/bindings/register_binding.dart';
+import 'package:grafil_app/bindings/riwayat_pendapatan_binding.dart';
 import 'package:grafil_app/bindings/splashscreen_binding.dart';
 import 'package:grafil_app/bindings/verification_binding.dart';
 import 'package:grafil_app/pages/authentication/forgotPassword/forgotpasswordpage.dart';
@@ -14,9 +15,7 @@ import 'package:grafil_app/pages/authentication/loadingpage.dart';
 import 'package:grafil_app/pages/dashboard/dashboardreservasipage.dart';
 import 'package:grafil_app/pages/authentication/login/loginpage.dart';
 import 'package:grafil_app/pages/reservasi/addreservasipage.dart';
-import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap1.dart';
-import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap2.dart';
-import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatanlap3.dart';
+import 'package:grafil_app/pages/riwayat/riwayat_pendapatan/pagependapatan.dart';
 import 'package:grafil_app/pages/riwayat/riwayat_reservasi/pageriwayatreservasi.dart';
 import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan1.dart';
 import 'package:grafil_app/pages/riwayat/riwayat_reservasi/riwayatlapangan2.dart';
@@ -40,9 +39,7 @@ class AppRoutes {
   static const riwayatreservasi3 = '/riwayat/lapangan3';
   static const pageRiwayat = '/riwayat/page';
   static const addReservasi = '/reservasi/add';
-  static const pendapatanlap1 = '/riwayat/pendapatan1';
-  static const pendapatanlap2 = '/riwayat/pendapatan2';
-  static const pendapatanlap3 = '/riwayat/pendapatan3';
+  static const pendapatanlap = '/riwayat/pendapatan1';
   static const loading = '/loading';
 
 
@@ -91,15 +88,9 @@ class AppRoutes {
     GetPage(
       name: AppRoutes.dashboardReservasi, 
       page: () => DashboardReservasiPage(),
+      binding: DetailReservationBiding(),
       transition: Transition.noTransition,
-      ),
-    GetPage(
-      name: AppRoutes.reservasi1, 
-      page: () => Reservasilapangan1()
-      binding: ReservationBinding(),
-      ),
-
-   
+      ), 
 
     GetPage(
       name: AppRoutes.riwayatreservasi1, 
@@ -128,24 +119,13 @@ class AppRoutes {
     GetPage(
       name: AppRoutes.addReservasi, 
       page: () => AddReservationPage(),
-      binding: ReservationBinding()
+      binding: AddReservationBinding()
       ),
 
     GetPage(
-      name: AppRoutes.pendapatanlap1, 
-      page: () => RiwayatPendapatanLapangan1(),
-      transition: Transition.noTransition,
-      ),
-
-    GetPage(
-      name: AppRoutes.pendapatanlap2, 
-      page: () => RiwayatPendapatanLapangan2(),
-      transition: Transition.noTransition,
-      ),
-
-    GetPage(
-      name: AppRoutes.pendapatanlap3, 
-      page: () => RiwayatPendapatanLapangan3(),
+      name: AppRoutes.pendapatanlap, 
+      page: () => RiwayatPendapatanLapangan(),
+      binding: RiwayatPendapatanBinding(),
       transition: Transition.noTransition,
       ),
 
