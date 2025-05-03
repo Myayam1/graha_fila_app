@@ -227,8 +227,8 @@ class RiwayatReservationController extends GetxController {
         if (searchQuery.value.isNotEmpty) {
       String query = searchQuery.value.toLowerCase();
       result = result.where((reservation) {
-        return reservation.nama.toLowerCase().contains(query) || 
-               reservation.telp.toLowerCase().contains(query);
+        return reservation.nama.toLowerCase().startsWith(query) || 
+               reservation.telp.toLowerCase().startsWith(query);
       }).toList();
     }
 

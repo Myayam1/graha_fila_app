@@ -16,11 +16,14 @@ class RiwayatPendapatanLapangan extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<RiwayatPendapatanController>();
 
-    return Scaffold(
+   return Scaffold(
       backgroundColor: Mycolors.background,
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           Stack(
             alignment: Alignment.center,
             children: [
@@ -186,7 +189,7 @@ class RiwayatPendapatanLapangan extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       color: Mycolors.blue,
                     ),
-                    onChanged: (value) {
+                    onChange: (value) {
                       controller.searchPayments(value);
                     },
                   ),
@@ -328,6 +331,6 @@ class RiwayatPendapatanLapangan extends StatelessWidget {
           ),
         ],
       ),
-    );
+      )));
   }
 }

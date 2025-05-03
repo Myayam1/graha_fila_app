@@ -6,10 +6,9 @@ import 'package:grafil_app/widget/mybutton.dart';
 import 'package:grafil_app/widget/mycard.dart';
 import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/myreservationcard.dart';
-
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class RiwayatReservasiPage extends StatelessWidget {
   final riwayatReservasiController = Get.find<RiwayatReservationController>();
@@ -28,26 +27,67 @@ class RiwayatReservasiPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              
+          Stack(
+            alignment: Alignment.center,
+            children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const MyText(
-                    text: 'Dashboard',
-                    fontSize: 24,
-                    textcolor: Mycolors.blue,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.logout, color: Mycolors.darkBlue),
-                    onPressed: () async {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.remove('token');
-                      Get.offAllNamed(AppRoutes.login);
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Mycolors.blue,
+                    ),
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.dashboardReservasi);
                     },
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const Text(
+                "Riwayat",
+                style: TextStyle(
+                  color: Mycolors.blue,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+              Row(
+            children: [
+              Expanded(
+                child: MyButton(
+                  text: 'Pendapatan',
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.pendapatanlap);
+                  },
+                  buttonbackgroundColor: Mycolors.background,
+                  textColor: Mycolors.blue,
+                  outlineColor: Mycolors.blue,
+                  isOutlined: true,
+                  borderRadius: 28,
+                  fontWeight: FontWeight.w600,
+                  margin: const EdgeInsets.only(right: 10, left: 10),
+                ),
+              ),
+              Expanded(
+                child: MyButton(
+                  text: 'Reservasi',
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.pageRiwayat);
+                  },
+                  buttonbackgroundColor: Mycolors.blue,
+                  textColor: Mycolors.white,
+                  borderRadius: 28,
+                  fontWeight: FontWeight.w600,
+                  margin: const EdgeInsets.only(right: 10, left: 10),
+                ),
+              ),
+            ],
+          ),
 
               const SizedBox(height: 16),
 
