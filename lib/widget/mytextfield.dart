@@ -27,7 +27,6 @@ class MyTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final bool? digitsOnly;
   final Function(String)? onDateSelected;
-  final ValueChanged<String>? onChanged;
   final Function(String)? onChange;
 
   /// Jika true, maka date picker membolehkan memilih tanggal dari masa lalu (untuk riwayat)
@@ -57,7 +56,6 @@ class MyTextField extends StatefulWidget {
     this.keyboardType,
     this.digitsOnly,
     this.onDateSelected,
-    this.onChanged
     this.onChange,
     this.isRiwayat = false,
   });
@@ -95,8 +93,7 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Center(
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
-          obscureText: widget.obscureText,
-          onChanged: widget.onChanged,
+          obscureText: widget.obscureText,         
           keyboardType:
               widget.keyboardType ??
               (widget.digitsOnly == true
