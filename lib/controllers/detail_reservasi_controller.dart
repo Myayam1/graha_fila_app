@@ -15,6 +15,10 @@ class DetailReservationController extends GetxController {
     getReservations();
   }
 
+  Future<void> refreshData() async {
+    await getReservations();
+  }
+
   Future<void> getReservations() async {
     try {
       isLoading.value = true;
@@ -26,7 +30,9 @@ class DetailReservationController extends GetxController {
         DateTime reservationDateTime = DateTime.parse(
           '${reservation.tanggal} ${reservation.waktu}',
         );
-        return reservationDateTime.add(const Duration(minutes: 59)).isBefore(currentDateTime);
+        return reservationDateTime
+            .add(const Duration(minutes: 59))
+            .isBefore(currentDateTime);
       });
 
       reservations.sort((reservationA, reservationB) {
@@ -59,64 +65,67 @@ class DetailReservationController extends GetxController {
     searchQuery.value = query;
     update();
   }
+
   String formatTimeRange(String startTime) {
-    
     final timeParts = startTime.split(':');
     if (timeParts.length != 2) return startTime;
-    
+
     int hour = int.tryParse(timeParts[0]) ?? 0;
     int minute = int.tryParse(timeParts[1]) ?? 0;
-    
 
     int endHour = hour + 1;
-    if (endHour >= 24) endHour = 0; 
-  
+    if (endHour >= 24) endHour = 0;
+
     String formattedStartHour = hour.toString().padLeft(2, '0');
     String formattedEndHour = endHour.toString().padLeft(2, '0');
     String formattedMinute = minute.toString().padLeft(2, '0');
-    
-   
+
     return "$formattedStartHour:$formattedMinute - $formattedEndHour:$formattedMinute";
   }
 
   List<ReservationModel> get filteredReservations {
     List<ReservationModel> result = reservations;
 
-   
     if (selectedDate.value != null && selectedDate.value!.isNotEmpty) {
       final parts = selectedDate.value!.split('-');
       if (parts.length == 3) {
         final apiDateFormat = "${parts[2]}-${parts[1]}-${parts[0]}";
-        result = result
-            .where((reservation) => reservation.tanggal == apiDateFormat)
-            .toList();
+        result =
+            result
+                .where((reservation) => reservation.tanggal == apiDateFormat)
+                .toList();
       }
     }
 
     if (selectedSpotId.value != 0) {
-      result = result
-          .where((reservasi) =>
-              int.parse(reservasi.lapangan) == selectedSpotId.value)
-          .toList();
+      result =
+          result
+              .where(
+                (reservasi) =>
+                    int.parse(reservasi.lapangan) == selectedSpotId.value,
+              )
+              .toList();
     }
 
-  
     if (searchQuery.value.isNotEmpty) {
       String query = searchQuery.value.toLowerCase();
-      result = result.where((reservation) {
-        return reservation.nama.toLowerCase().contains(query) ||
-            reservation.telp.toLowerCase().contains(query);
-      }).toList();
+      result =
+          result.where((reservation) {
+            return reservation.nama.toLowerCase().contains(query) ||
+                reservation.telp.toLowerCase().contains(query);
+          }).toList();
     }
 
-    
     DateTime now = DateTime.now();
-    result = result.where((reservation) {
-      DateTime reservationDateTime = DateTime.parse(
-        '${reservation.tanggal} ${reservation.waktu}',
-      );
-      return reservationDateTime.add(const Duration(minutes: 59)).isAfter(now);
-    }).toList();
+    result =
+        result.where((reservation) {
+          DateTime reservationDateTime = DateTime.parse(
+            '${reservation.tanggal} ${reservation.waktu}',
+          );
+          return reservationDateTime
+              .add(const Duration(minutes: 59))
+              .isAfter(now);
+        }).toList();
 
     return result;
   }

@@ -126,6 +126,10 @@ class RiwayatReservationController extends GetxController {
     super.onInit();
     getReservations();
   }
+  
+  Future<void> refreshData() async {
+  await getReservations();
+}
 
   Future<void> getReservations() async {
     try {

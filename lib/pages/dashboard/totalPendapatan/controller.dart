@@ -17,6 +17,11 @@ class PaymentController extends GetxController {
     _startPolling();
   }
 
+
+  Future<void> refreshData() async {
+    await fetchTodayIncome();
+  }
+
   @override
   void onClose() {
     _timer?.cancel(); 
@@ -24,7 +29,7 @@ class PaymentController extends GetxController {
   }
 
   void _startPolling() {
-    _timer = Timer.periodic(Duration(seconds: 30), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 120), (timer) {
       fetchTodayIncome(); 
     });
   }
