@@ -117,7 +117,7 @@ class RiwayatReservationController extends GetxController {
   var isLoading = false.obs;
   var selectedSpotId = 0.obs;
   var selectedDate = Rx<String?>(null);
-   var searchQuery = ''.obs; 
+  var searchQuery = ''.obs;
   var pastReservations = <ReservationModel>[].obs;
   var upcomingReservations = <ReservationModel>[].obs;
 
@@ -135,29 +135,17 @@ class RiwayatReservationController extends GetxController {
 
       DateTime currentDateTime = DateTime.now();
 
-      // Separate past and upcoming reservations
+      // Pisahkan data riwayat dan mendatang
       pastReservations.value = reservations.where((reservation) {
         DateTime reservationDateTime = DateTime.parse(
           '${reservation.tanggal} ${reservation.waktu}',
         );
 
-        // Kalau tanggal reservasi sebelum hari ini, tampilkan
-        if (reservationDateTime.isBefore(
-          DateTime(currentDateTime.year, currentDateTime.month, currentDateTime.day),
-        )) {
-          return true;
-        }
+        // Tambahkan durasi 59 menit ke waktu reservasi
+        DateTime endOfReservation = reservationDateTime.add(Duration(minutes: 59));
 
-        // Kalau tanggal reservasi sama dengan hari ini
-        if (reservationDateTime.year == currentDateTime.year &&
-            reservationDateTime.month == currentDateTime.month &&
-            reservationDateTime.day == currentDateTime.day) {
-          // Tampilkan hanya kalau jamnya sudah lewat
-          return reservationDateTime.isBefore(currentDateTime);
-        }
-
-        // Kalau tanggal reservasi di masa depan, jangan tampilkan
-        return false;
+        // Masuk ke riwayat jika waktu akhir reservasi sudah lewat dari sekarang
+        return endOfReservation.isBefore(currentDateTime);
       }).toList();
 
       upcomingReservations.value = reservations.where((reservation) {
@@ -165,28 +153,23 @@ class RiwayatReservationController extends GetxController {
           '${reservation.tanggal} ${reservation.waktu}',
         );
 
-        // Kalau reservasi lebih baru dari sekarang (baik hari ini atau masa depan)
-        return reservationDateTime.isAfter(currentDateTime);
+        // Tambahkan durasi 59 menit ke waktu reservasi
+        DateTime endOfReservation = reservationDateTime.add(Duration(minutes: 59));
+
+        // Masuk ke upcoming jika belum selesai
+        return endOfReservation.isAfter(currentDateTime);
       }).toList();
 
-      // Sort past and upcoming reservations
-      pastReservations.sort((reservationA, reservationB) {
-        DateTime aDateTime = DateTime.parse(
-          '${reservationA.tanggal} ${reservationA.waktu}',
-        );
-        DateTime bDateTime = DateTime.parse(
-          '${reservationB.tanggal} ${reservationB.waktu}',
-        );
+      // Urutkan data
+      pastReservations.sort((a, b) {
+        DateTime aDateTime = DateTime.parse('${a.tanggal} ${a.waktu}');
+        DateTime bDateTime = DateTime.parse('${b.tanggal} ${b.waktu}');
         return aDateTime.compareTo(bDateTime);
       });
 
-      upcomingReservations.sort((reservationA, reservationB) {
-        DateTime aDateTime = DateTime.parse(
-          '${reservationA.tanggal} ${reservationA.waktu}',
-        );
-        DateTime bDateTime = DateTime.parse(
-          '${reservationB.tanggal} ${reservationB.waktu}',
-        );
+      upcomingReservations.sort((a, b) {
+        DateTime aDateTime = DateTime.parse('${a.tanggal} ${a.waktu}');
+        DateTime bDateTime = DateTime.parse('${b.tanggal} ${b.waktu}');
         return aDateTime.compareTo(bDateTime);
       });
 
@@ -206,9 +189,26 @@ class RiwayatReservationController extends GetxController {
     selectedDate.value = null;
     update();
   }
-    void updateSearchQuery(String query) {
+
+  void updateSearchQuery(String query) {
     searchQuery.value = query;
     update();
+  }
+  String formatTimeRange(String startTime) {
+    final timeParts = startTime.split(':');
+    if (timeParts.length != 2) return startTime;
+    
+    int hour = int.tryParse(timeParts[0]) ?? 0;
+    int minute = int.tryParse(timeParts[1]) ?? 0;
+    
+    int endHour = hour + 1;
+    if (endHour >= 24) endHour = 0; 
+  
+    String formattedStartHour = hour.toString().padLeft(2, '0');
+    String formattedEndHour = endHour.toString().padLeft(2, '0');
+    String formattedMinute = minute.toString().padLeft(2, '0');
+    
+    return "$formattedStartHour:$formattedMinute - $formattedEndHour:$formattedMinute";
   }
 
   List<ReservationModel> get filteredReservations {
@@ -224,31 +224,27 @@ class RiwayatReservationController extends GetxController {
             .toList();
       }
     }
-        if (searchQuery.value.isNotEmpty) {
+
+    if (searchQuery.value.isNotEmpty) {
       String query = searchQuery.value.toLowerCase();
       result = result.where((reservation) {
-        return reservation.nama.toLowerCase().startsWith(query) || 
+        return reservation.nama.toLowerCase().startsWith(query) ||
                reservation.telp.toLowerCase().startsWith(query);
       }).toList();
     }
 
     if (selectedSpotId.value != 0) {
       result = result
-          .where(
-            (reservasi) =>
-                int.parse(reservasi.lapangan) == selectedSpotId.value,
-          )
+          .where((reservasi) =>
+              int.parse(reservasi.lapangan) == selectedSpotId.value)
           .toList();
     }
 
     return result;
   }
-  
 
   void changeSpotFilter(int spotId) {
     selectedSpotId.value = spotId;
     update();
   }
 }
-
-
