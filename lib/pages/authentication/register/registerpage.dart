@@ -15,7 +15,11 @@ class RegisterPage extends StatelessWidget {
     final registerController = Get.find<RegisterController>();
     return Scaffold(
       backgroundColor: Mycolors.blue,
-      body: Column(
+      body: SingleChildScrollView(
+        child:Container(
+           height: MediaQuery.of(context).size.height,
+        
+        child:Column( 
         children: [
           const SizedBox(height: 65),
           const MyText(
@@ -134,6 +138,8 @@ class RegisterPage extends StatelessWidget {
           ),
         ],
       ),
+    )
+    )
     );
   }
 }

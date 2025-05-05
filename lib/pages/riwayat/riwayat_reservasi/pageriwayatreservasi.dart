@@ -9,7 +9,6 @@ import 'package:grafil_app/widget/myreservationcard.dart';
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
 
-
 class RiwayatReservasiPage extends StatelessWidget {
   final riwayatReservasiController = Get.find<RiwayatReservationController>();
   final TextEditingController dateController = TextEditingController();
@@ -27,67 +26,66 @@ class RiwayatReservasiPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              Stack(
+                alignment: Alignment.center,
                 children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Mycolors.blue,
+                        ),
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.dashboardReservasi);
+                        },
+                      ),
+                    ],
+                  ),
+                  const Text(
+                    "Riwayat",
+                    style: TextStyle(
                       color: Mycolors.blue,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w600,
                     ),
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.dashboardReservasi);
-                    },
                   ),
                 ],
               ),
-              const Text(
-                "Riwayat",
-                style: TextStyle(
-                  color: Mycolors.blue,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
-            children: [
-              Expanded(
-                child: MyButton(
-                  text: 'Pendapatan',
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.pendapatanlap);
-                  },
-                  buttonbackgroundColor: Mycolors.background,
-                  textColor: Mycolors.blue,
-                  outlineColor: Mycolors.blue,
-                  isOutlined: true,
-                  borderRadius: 28,
-                  fontWeight: FontWeight.w600,
-                  margin: const EdgeInsets.only(right: 10, left: 10),
-                ),
+                children: [
+                  Expanded(
+                    child: MyButton(
+                      text: 'Pendapatan',
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.pendapatanlap);
+                      },
+                      buttonbackgroundColor: Mycolors.background,
+                      textColor: Mycolors.blue,
+                      outlineColor: Mycolors.blue,
+                      isOutlined: true,
+                      borderRadius: 28,
+                      fontWeight: FontWeight.w600,
+                      margin: const EdgeInsets.only(right: 10, left: 10),
+                    ),
+                  ),
+                  Expanded(
+                    child: MyButton(
+                      text: 'Reservasi',
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.pageRiwayat);
+                      },
+                      buttonbackgroundColor: Mycolors.blue,
+                      textColor: Mycolors.white,
+                      borderRadius: 28,
+                      fontWeight: FontWeight.w600,
+                      margin: const EdgeInsets.only(right: 10, left: 10),
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: MyButton(
-                  text: 'Reservasi',
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.pageRiwayat);
-                  },
-                  buttonbackgroundColor: Mycolors.blue,
-                  textColor: Mycolors.white,
-                  borderRadius: 28,
-                  fontWeight: FontWeight.w600,
-                  margin: const EdgeInsets.only(right: 10, left: 10),
-                ),
-              ),
-            ],
-          ),
 
               const SizedBox(height: 16),
 
@@ -95,83 +93,87 @@ class RiwayatReservasiPage extends StatelessWidget {
                 () => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyButton(
-                      text: 'All',
-                      onPressed: () {
-                        riwayatReservasiController.changeSpotFilter(0);
-                      },
-                      buttonbackgroundColor:
-                          riwayatReservasiController.selectedSpotId.value == 0
-                              ? Mycolors.darkBlue
-                              : Mycolors.blue,
-                      textColor: Mycolors.white,
-                      fontSize: 14,
-                      height: 40,
-                      fontWeight: FontWeight.bold,
-                      width: 80,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
+                    Expanded(
+                      child: MyButton(
+                        text: 'All',
+                        onPressed: () {
+                          riwayatReservasiController.changeSpotFilter(0);
+                        },
+                        buttonbackgroundColor:
+                            riwayatReservasiController.selectedSpotId.value == 0
+                                ? Mycolors.darkBlue
+                                : Mycolors.blue,
+                        textColor: Mycolors.white,
+                        fontSize: 14,
+                        height: 40,
+                        fontWeight: FontWeight.bold,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
-                    MyButton(
-                      text: 'Lap.1',
-                      onPressed: () {
-                        riwayatReservasiController.changeSpotFilter(1);
-                      },
-                      buttonbackgroundColor:
-                          riwayatReservasiController.selectedSpotId.value == 1
-                              ? Mycolors.darkBlue
-                              : Mycolors.blue,
-                      textColor: Mycolors.white,
-                      fontSize: 14,
-                      height: 40,
-                      fontWeight: FontWeight.bold,
-                      width: 100,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
+                    Expanded(
+                      child: MyButton(
+                        text: 'Lap.1',
+                        onPressed: () {
+                          riwayatReservasiController.changeSpotFilter(1);
+                        },
+                        buttonbackgroundColor:
+                            riwayatReservasiController.selectedSpotId.value == 1
+                                ? Mycolors.darkBlue
+                                : Mycolors.blue,
+                        textColor: Mycolors.white,
+                        fontSize: 14,
+                        height: 40,
+                        fontWeight: FontWeight.bold,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
-                    MyButton(
-                      text: 'Lap.2',
-                      onPressed: () {
-                        riwayatReservasiController.changeSpotFilter(2);
-                      },
-                      buttonbackgroundColor:
-                          riwayatReservasiController.selectedSpotId.value == 2
-                              ? Mycolors.darkBlue
-                              : Mycolors.blue,
-                      textColor: Mycolors.white,
-                      fontSize: 14,
-                      height: 40,
-                      fontWeight: FontWeight.bold,
-                      width: 100,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
+                    Expanded(
+                      child: MyButton(
+                        text: 'Lap.2',
+                        onPressed: () {
+                          riwayatReservasiController.changeSpotFilter(2);
+                        },
+                        buttonbackgroundColor:
+                            riwayatReservasiController.selectedSpotId.value == 2
+                                ? Mycolors.darkBlue
+                                : Mycolors.blue,
+                        textColor: Mycolors.white,
+                        fontSize: 14,
+                        height: 40,
+                        fontWeight: FontWeight.bold,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
-                    MyButton(
-                      text: 'Lap.3',
-                      onPressed: () {
-                        riwayatReservasiController.changeSpotFilter(3);
-                      },
-                      buttonbackgroundColor:
-                          riwayatReservasiController.selectedSpotId.value == 3
-                              ? Mycolors.darkBlue
-                              : Mycolors.blue,
-                      textColor: Mycolors.white,
-                      fontSize: 14,
-                      height: 40,
-                      fontWeight: FontWeight.bold,
-                      width: 100,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
+                    Expanded(
+                      child: MyButton(
+                        text: 'Lap.3',
+                        onPressed: () {
+                          riwayatReservasiController.changeSpotFilter(3);
+                        },
+                        buttonbackgroundColor:
+                            riwayatReservasiController.selectedSpotId.value == 3
+                                ? Mycolors.darkBlue
+                                : Mycolors.blue,
+                        textColor: Mycolors.white,
+                        fontSize: 14,
+                        height: 40,
+                        fontWeight: FontWeight.bold,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
                       ),
                     ),
                   ],
@@ -185,7 +187,7 @@ class RiwayatReservasiPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 0),
                     child: MyTextField(
                       controller: dateController,
-                       isRiwayat: true,
+                      isRiwayat: true,
                       hintText: "Pilih tanggal",
                       iconlogo: const Icon(
                         Icons.calendar_today,
@@ -260,11 +262,10 @@ class RiwayatReservasiPage extends StatelessWidget {
                       padding: const EdgeInsets.all(5),
                       child: Obx(() {
                         final filteredList =
-                            riwayatReservasiController
-                                .filteredReservations; 
+                            riwayatReservasiController.filteredReservations;
                         if (riwayatReservasiController.isLoading.value) {
                           return const Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(color: Mycolors.blue,),
                           );
                         }
 
@@ -288,22 +289,27 @@ class RiwayatReservasiPage extends StatelessWidget {
                             ),
                           );
                         }
-
-                        return ListView.separated(
-                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          itemCount: filteredList.length,
-                          separatorBuilder:
-                              (context, index) => const SizedBox(height: 20),
-                          itemBuilder: (context, index) {
-                            final res = filteredList[index];
-                            return ReservationCard(
-                              waktu: riwayatReservasiController.formatTimeRange(res.waktu),
-                              tanggal: res.tanggal,
-                              nama: res.nama,
-                              lapangan: res.lapangan,
-                              telp: res.telp,
-                            );
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            await riwayatReservasiController.refreshData();
                           },
+                          child: ListView.separated(
+                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                            itemCount: filteredList.length,
+                            separatorBuilder:
+                                (context, index) => const SizedBox(height: 20),
+                            itemBuilder: (context, index) {
+                              final res = filteredList[index];
+                              return ReservationCard(
+                                waktu: riwayatReservasiController
+                                    .formatTimeRange(res.waktu),
+                                tanggal: res.tanggal,
+                                nama: res.nama,
+                                lapangan: res.lapangan,
+                                telp: res.telp,
+                              );
+                            },
+                          ),
                         );
                       }),
                     ),
