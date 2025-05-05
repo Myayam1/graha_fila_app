@@ -377,7 +377,7 @@ class DashboardReservasiPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final res = filteredList[index];
                             return ReservationCard(
-                              waktu: res.waktu,
+                              waktu: reservationController.formatTimeRange(res.waktu),
                               tanggal: res.tanggal,
                               nama: res.nama,
                               lapangan: res.lapangan,
