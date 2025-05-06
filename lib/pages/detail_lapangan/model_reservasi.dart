@@ -2,7 +2,8 @@ class ReservationModel {
   final int id;
   final String nama;
   final String telp;
-  final String tanggal;
+  final String tanggal; // Format YYYY-MM-DD untuk internal API
+  final String tanggalFormatted; // Format DD MMM YYYY untuk UI
   final String waktu;
   final String lapangan;
   final String bookedBy;
@@ -13,6 +14,7 @@ class ReservationModel {
     required this.nama,
     required this.telp,
     required this.tanggal,
+    required this.tanggalFormatted,
     required this.waktu,
     required this.lapangan,
     required this.bookedBy,
@@ -21,8 +23,17 @@ class ReservationModel {
 
   factory ReservationModel.fromJson(Map<String, dynamic> json) {
     final reservationTime = DateTime.parse(json['reservation_time']);
+    
+    // Format untuk komunikasi API (YYYY-MM-DD)
     final tanggal =
         '${reservationTime.year.toString().padLeft(4, '0')}-${reservationTime.month.toString().padLeft(2, '0')}-${reservationTime.day.toString().padLeft(2, '0')}';
+    
+    // Format untuk UI (DD MMM YYYY)
+    final int day = reservationTime.day;
+    final String monthAbbr = _getMonthAbbreviation(reservationTime.month);
+    final int year = reservationTime.year;
+    final tanggalFormatted = '$day $monthAbbr $year';
+    
     final waktu =
         '${reservationTime.hour.toString().padLeft(2, '0')}:${reservationTime.minute.toString().padLeft(2, '0')}';
     final nama = json['user']?['name'] ?? json['name'] ?? 'Unknown';
@@ -33,11 +44,21 @@ class ReservationModel {
       nama: nama,
       telp: telp,
       tanggal: tanggal,
+      tanggalFormatted: tanggalFormatted,
       waktu: waktu,
       lapangan: json['spot_id'].toString(),
       bookedBy: json['booked_by'] ?? 'Unknown',
       user: json['user'] != null ? UserModel.fromJson(json['user']) : null,
     );
+  }
+  
+  // Helper method untuk mendapatkan singkatan bulan
+  static String _getMonthAbbreviation(int month) {
+    final monthNames = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return monthNames[month - 1];
   }
 }
 

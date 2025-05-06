@@ -61,58 +61,59 @@ class DashboardReservasiPage extends StatelessWidget {
                         ),
                         const Spacer(),
                         IconButton(
-  icon: const Icon(
-    Icons.logout,
-    color: Mycolors.darkBlue,
-  ),
-  onPressed: () {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const MyText(
-            text: 'Konfirmasi Logout',
-            fontSize: 18,
-            textcolor: Mycolors.blue,
-            fontWeight: FontWeight.bold,
-          ),
-          content: const MyText(
-            text: 'Apakah Anda yakin mau logout?',
-            fontSize: 16,
-            textcolor: Mycolors.darkBlue,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); 
-              },
-              child: const MyText(
-                text: 'Tidak',
-                fontSize: 14,
-                textcolor: Mycolors.blue,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop(); 
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.remove('token');
-                Get.offAllNamed(AppRoutes.login); 
-              },
-              child: const MyText(
-                text: 'Ya',
-                fontSize: 14,
-                textcolor: Mycolors.blue,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  },
-),
+                          icon: const Icon(
+                            Icons.logout,
+                            color: Mycolors.darkBlue,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const MyText(
+                                    text: 'Konfirmasi Logout',
+                                    fontSize: 18,
+                                    textcolor: Mycolors.blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  content: const MyText(
+                                    text: 'Apakah Anda yakin mau logout?',
+                                    fontSize: 16,
+                                    textcolor: Mycolors.darkBlue,
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const MyText(
+                                        text: 'Tidak',
+                                        fontSize: 14,
+                                        textcolor: Mycolors.blue,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                        final prefs =
+                                            await SharedPreferences.getInstance();
+                                        await prefs.remove('token');
+                                        Get.offAllNamed(AppRoutes.login);
+                                      },
+                                      child: const MyText(
+                                        text: 'Ya',
+                                        fontSize: 14,
+                                        textcolor: Mycolors.blue,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -426,7 +427,6 @@ class DashboardReservasiPage extends StatelessWidget {
                                   child: CircularProgressIndicator(
                                     color: Mycolors.blue,
                                   ),
-                                
                                 );
                               }
 
@@ -466,7 +466,7 @@ class DashboardReservasiPage extends StatelessWidget {
                                   return ReservationCard(
                                     waktu: reservationController
                                         .formatTimeRange(res.waktu),
-                                    tanggal: res.tanggal,
+                                    tanggal: res.tanggalFormatted,
                                     nama: res.nama,
                                     lapangan: res.lapangan,
                                     telp: res.telp,

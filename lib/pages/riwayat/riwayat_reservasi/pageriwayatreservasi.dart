@@ -303,7 +303,7 @@ class RiwayatReservasiPage extends StatelessWidget {
                               return ReservationCard(
                                 waktu: riwayatReservasiController
                                     .formatTimeRange(res.waktu),
-                                tanggal: res.tanggal,
+                                tanggal: res.tanggalFormatted,
                                 nama: res.nama,
                                 lapangan: res.lapangan,
                                 telp: res.telp,

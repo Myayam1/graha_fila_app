@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grafil_app/widget/mycolor.dart';
-import 'package:intl/intl.dart';
 
 class MyTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -23,14 +22,13 @@ class MyTextField extends StatefulWidget {
   final bool? hasOutline;
   final Color? outlineColor;
   final double? outlineWidth;
-  final List<TextInputFormatter>? inputFormatters; 
+  final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final bool? digitsOnly;
   final Function(String)? onDateSelected;
   final Function(String)? onChange;
-
-  /// Jika true, maka date picker membolehkan memilih tanggal dari masa lalu (untuk riwayat)
   final bool isRiwayat;
+  final bool readOnly;
 
   const MyTextField({
     super.key,
@@ -58,6 +56,7 @@ class MyTextField extends StatefulWidget {
     this.onDateSelected,
     this.onChange,
     this.isRiwayat = false,
+    this.readOnly = false,
   });
 
   @override
@@ -93,7 +92,8 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Center(
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
-          obscureText: widget.obscureText,         
+          obscureText: widget.obscureText,
+          
           keyboardType:
               widget.keyboardType ??
               (widget.digitsOnly == true
@@ -108,7 +108,7 @@ class _MyTextFieldState extends State<MyTextField> {
                 fontSize: 14,
                 fontWeight: widget.fontWeight ?? FontWeight.normal,
               ),
-          readOnly: widget.isDatePicker,
+          readOnly: widget.isDatePicker || widget.readOnly,
           onChanged: widget.onChange,
           onTap: widget.isDatePicker
               ? () async {
@@ -118,8 +118,9 @@ class _MyTextFieldState extends State<MyTextField> {
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: initialDate,
+                    // Atur rentang tanggal berdasarkan isRiwayat
                     firstDate: widget.isRiwayat ? DateTime(1900) : DateTime.now(),
-                    lastDate: widget.isRiwayat ? now : DateTime(2100),
+                    lastDate: DateTime(2100), 
                     builder: (context, child) {
                       return Theme(
                         data: ThemeData(
@@ -140,8 +141,15 @@ class _MyTextFieldState extends State<MyTextField> {
                   );
 
                   if (pickedDate != null) {
-                    String formattedDate =
-                        DateFormat('dd-MM-yyyy').format(pickedDate);
+                    // Format tanggal ke DD MMM YYYY
+                    final day = pickedDate.day.toString().padLeft(2, '0');
+                    final monthAbbr = [
+                      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                    ][pickedDate.month - 1];
+                    final year = pickedDate.year.toString();
+                    final formattedDate = '$day $monthAbbr $year';
+
                     setState(() {
                       selectedDate = pickedDate;
                       widget.controller?.text = formattedDate;

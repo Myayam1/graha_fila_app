@@ -50,12 +50,22 @@ class RiwayatPendapatanCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyText(
-                    text: nama,
-                    fontSize: 14,
-                    textcolor: Mycolors.blue,
-                    fontWeight: FontWeight.bold,
+                  
+                  Expanded(
+                    child: SizedBox(
+                      width: 200, 
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: MyText(
+                          text: nama,
+                          fontSize: 14,
+                          textcolor: Mycolors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
+                  const SizedBox(width: 25),
                   MyText(
                     text: tanggal,
                     fontSize: 14,
@@ -65,7 +75,6 @@ class RiwayatPendapatanCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
-
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -86,7 +95,6 @@ class RiwayatPendapatanCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                       const SizedBox(height: 4),
-
                       MyText(
                         text: 'No telp',
                         fontSize: 14,
@@ -95,7 +103,6 @@ class RiwayatPendapatanCard extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: Column(
@@ -121,7 +128,6 @@ class RiwayatPendapatanCard extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

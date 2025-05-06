@@ -29,8 +29,8 @@ class AddReservationController extends GetxController {
   );
 
   final List<String> allTimeSlots = [
-    "8:00",
-    "9:00",
+    "08:00",
+    "09:00",
     "10:00",
     "11:00",
     "12:00",
@@ -44,8 +44,7 @@ class AddReservationController extends GetxController {
     "20:00",
     "21:00",
     "22:00",
-    "23:00",
-    "24:00",
+
   ];
 
   @override
