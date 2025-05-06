@@ -159,7 +159,9 @@ class RiwayatPendapatanController extends GetxController {
     if (dateStr == null || dateStr.isEmpty) return '-';
     try {
       final DateTime date = DateTime.parse(dateStr);
-      return DateFormat('dd/MM/yy').format(date);
+      return DateFormat(
+        'dd MMM yyyy',
+      ).format(date); 
     } catch (e) {
       return dateStr;
     }

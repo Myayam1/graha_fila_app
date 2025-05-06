@@ -82,6 +82,7 @@ class AddReservationPage extends StatelessWidget {
                       height: 50,
                       borderRadius: 25,
                       hintText: "Harga pembayaran",
+                      readOnly: true,
                       
                     ),
 

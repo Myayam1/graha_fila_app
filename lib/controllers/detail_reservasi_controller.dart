@@ -52,6 +52,7 @@ class DetailReservationController extends GetxController {
   }
 
   void filterByDate(String formattedDate) {
+    // formattedDate sekarang dalam format "DD MMM YYYY" (contoh: "10 May 2025")
     selectedDate.value = formattedDate;
     update();
   }
@@ -87,45 +88,53 @@ class DetailReservationController extends GetxController {
     List<ReservationModel> result = reservations;
 
     if (selectedDate.value != null && selectedDate.value!.isNotEmpty) {
-      final parts = selectedDate.value!.split('-');
+      // Convert dari "DD MMM YYYY" ke format YYYY-MM-DD untuk pencarian
+      final parts = selectedDate.value!.split(' ');
       if (parts.length == 3) {
-        final apiDateFormat = "${parts[2]}-${parts[1]}-${parts[0]}";
-        result =
-            result
-                .where((reservation) => reservation.tanggal == apiDateFormat)
-                .toList();
+        final day = parts[0].padLeft(2, '0');
+        
+        // Convert bulan dari singkatan kembali ke nomor
+        final monthMap = {
+          'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04',
+          'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08',
+          'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
+        };
+        
+        final month = monthMap[parts[1]] ?? '01';
+        final year = parts[2];
+        
+        final apiDateFormat = "$year-$month-$day";  // Format YYYY-MM-DD untuk API
+        result = result
+            .where((reservation) => reservation.tanggal == apiDateFormat)
+            .toList();
       }
     }
 
     if (selectedSpotId.value != 0) {
-      result =
-          result
-              .where(
-                (reservasi) =>
-                    int.parse(reservasi.lapangan) == selectedSpotId.value,
-              )
-              .toList();
+      result = result
+          .where(
+            (reservasi) => int.parse(reservasi.lapangan) == selectedSpotId.value,
+          )
+          .toList();
     }
 
     if (searchQuery.value.isNotEmpty) {
       String query = searchQuery.value.toLowerCase();
-      result =
-          result.where((reservation) {
-            return reservation.nama.toLowerCase().contains(query) ||
-                reservation.telp.toLowerCase().contains(query);
-          }).toList();
+      result = result.where((reservation) {
+        return reservation.nama.toLowerCase().startsWith(query) ||
+            reservation.telp.toLowerCase().startsWith(query);
+      }).toList();
     }
 
     DateTime now = DateTime.now();
-    result =
-        result.where((reservation) {
-          DateTime reservationDateTime = DateTime.parse(
-            '${reservation.tanggal} ${reservation.waktu}',
-          );
-          return reservationDateTime
-              .add(const Duration(minutes: 59))
-              .isAfter(now);
-        }).toList();
+    result = result.where((reservation) {
+      DateTime reservationDateTime = DateTime.parse(
+        '${reservation.tanggal} ${reservation.waktu}',
+      );
+      return reservationDateTime
+          .add(const Duration(minutes: 59))
+          .isAfter(now);
+    }).toList();
 
     return result;
   }

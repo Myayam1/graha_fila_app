@@ -232,7 +232,7 @@ class RiwayatPendapatanLapangan extends StatelessWidget {
                           if (controller.selectedDate.value != null)
                             Chip(
                               label: Text(
-                                'Tanggal: ${DateFormat('dd/MM/yy').format(controller.selectedDate.value!)}',
+                                'Tanggal: ${DateFormat('dd MMM yyyy').format(controller.selectedDate.value!)}', 
                               ),
                               deleteIcon: const Icon(Icons.close, size: 18),
                               onDeleted: () {
