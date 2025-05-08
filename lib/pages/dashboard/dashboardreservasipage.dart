@@ -350,8 +350,19 @@ class DashboardReservasiPage extends StatelessWidget {
                             height: 50,
                             borderRadius: 24,
                             isDatePicker: true,
-                            onDateSelected: (formattedDate) {
-                              reservationController.filterByDate(formattedDate);
+                            isRangeDatePicker: true,
+                            onDateSelected: (formattedRange) {
+                              final dates = formattedRange.split(
+                                ' - ',
+                              ); 
+                              if (dates.length == 2) {
+                                
+                                reservationController.setDateRange(
+                                  dates[0]
+                                      .trim(),
+                                  dates[1].trim(), 
+                                );
+                              }
                             },
                             textStyle: const TextStyle(
                               fontSize: 15,
