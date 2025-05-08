@@ -1,12 +1,14 @@
 import 'package:get/get.dart';
-import 'package:grafil_app/pages/detail_lapangan/detail_service.dart';
 import 'package:grafil_app/pages/detail_lapangan/model_reservasi.dart';
+import 'package:grafil_app/pages/detail_lapangan/detail_service.dart';
 
 class DetailReservationController extends GetxController {
   var reservations = <ReservationModel>[].obs;
   var isLoading = false.obs;
   var selectedSpotId = 0.obs;
   var selectedDate = Rx<String?>(null);
+  var selectedStartDate = Rx<DateTime?>(null);
+  var selectedEndDate = Rx<DateTime?>(null);
   var searchQuery = ''.obs;
 
   @override
@@ -51,14 +53,39 @@ class DetailReservationController extends GetxController {
     }
   }
 
-  void filterByDate(String formattedDate) {
-    // formattedDate sekarang dalam format "DD MMM YYYY" (contoh: "10 May 2025")
-    selectedDate.value = formattedDate;
+
+  String formatDateToUI(DateTime date) {
+    final day = date.day.toString().padLeft(2, '0');
+    final monthAbbr = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ][date.month - 1];
+    final year = date.year.toString();
+    return '$day $monthAbbr $year';
+  }
+
+  DateTime parseDateFromUI(String formattedDate) {
+    final parts = formattedDate.split(' ');
+    final day = int.parse(parts[0]);
+    final month = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ].indexOf(parts[1]) + 1;
+    final year = int.parse(parts[2]);
+    return DateTime(year, month, day);
+  }
+
+  void setDateRange(String startDate, String endDate) {
+    selectedDate.value = "$startDate - $endDate";
+    selectedStartDate.value = parseDateFromUI(startDate);
+    selectedEndDate.value = parseDateFromUI(endDate);
     update();
   }
 
   void clearDateFilter() {
     selectedDate.value = null;
+    selectedStartDate.value = null;
+    selectedEndDate.value = null;
     update();
   }
 
@@ -87,27 +114,12 @@ class DetailReservationController extends GetxController {
   List<ReservationModel> get filteredReservations {
     List<ReservationModel> result = reservations;
 
-    if (selectedDate.value != null && selectedDate.value!.isNotEmpty) {
-      // Convert dari "DD MMM YYYY" ke format YYYY-MM-DD untuk pencarian
-      final parts = selectedDate.value!.split(' ');
-      if (parts.length == 3) {
-        final day = parts[0].padLeft(2, '0');
-        
-        // Convert bulan dari singkatan kembali ke nomor
-        final monthMap = {
-          'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04',
-          'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08',
-          'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
-        };
-        
-        final month = monthMap[parts[1]] ?? '01';
-        final year = parts[2];
-        
-        final apiDateFormat = "$year-$month-$day";  // Format YYYY-MM-DD untuk API
-        result = result
-            .where((reservation) => reservation.tanggal == apiDateFormat)
-            .toList();
-      }
+    if (selectedStartDate.value != null && selectedEndDate.value != null) {
+      result = result.where((reservation) {
+        DateTime reservationDate = DateTime.parse(reservation.tanggal);
+        return reservationDate.isAfter(selectedStartDate.value!.subtract(const Duration(days: 1))) &&
+               reservationDate.isBefore(selectedEndDate.value!.add(const Duration(days: 1)));
+      }).toList();
     }
 
     if (selectedSpotId.value != 0) {

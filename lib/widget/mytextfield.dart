@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_function_declarations_over_variables
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +21,7 @@ class MyTextField extends StatefulWidget {
   final TextStyle? hintTextStyle;
   final EdgeInsetsGeometry? margin;
   final bool isDatePicker;
+  final bool isRangeDatePicker;
   final bool? hasOutline;
   final Color? outlineColor;
   final double? outlineWidth;
@@ -47,6 +50,7 @@ class MyTextField extends StatefulWidget {
     this.hintTextStyle,
     this.margin,
     this.isDatePicker = false,
+    this.isRangeDatePicker = false,
     this.hasOutline,
     this.outlineColor,
     this.outlineWidth,
@@ -93,15 +97,13 @@ class _MyTextFieldState extends State<MyTextField> {
         child: TextField(
           controller: widget.controller ?? TextEditingController(),
           obscureText: widget.obscureText,
-          
-          keyboardType:
-              widget.keyboardType ??
+          keyboardType: widget.keyboardType ??
               (widget.digitsOnly == true
                   ? TextInputType.number
                   : TextInputType.text),
           inputFormatters: widget.digitsOnly == true
               ? [FilteringTextInputFormatter.digitsOnly]
-              : null,
+              : widget.inputFormatters,
           style: widget.textStyle ??
               GoogleFonts.montserrat(
                 color: widget.textcolor ?? Colors.black,
@@ -112,51 +114,108 @@ class _MyTextFieldState extends State<MyTextField> {
           onChanged: widget.onChange,
           onTap: widget.isDatePicker
               ? () async {
-                  DateTime now = DateTime.now();
-                  DateTime initialDate = selectedDate ?? now;
-
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: initialDate,
-                    // Atur rentang tanggal berdasarkan isRiwayat
-                    firstDate: widget.isRiwayat ? DateTime(1900) : DateTime.now(),
-                    lastDate: DateTime(2100), 
-                    builder: (context, child) {
-                      return Theme(
-                        data: ThemeData(
-                          colorScheme: ColorScheme.light(
-                            primary: Mycolors.blue,
-                            onPrimary: Mycolors.background,
-                            onSurface: Mycolors.darkBlue,
-                          ),
-                          textButtonTheme: TextButtonThemeData(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Mycolors.darkBlue,
+                  if (widget.isRangeDatePicker) {
+                    final DateTimeRange? pickedRange =
+                        await showDateRangePicker(
+                      context: context,
+                      firstDate: widget.isRiwayat
+                          ? DateTime(1900)
+                          : DateTime.now(),
+                      lastDate: widget.isRiwayat
+                          ? DateTime.now()
+                          : DateTime(2100),
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData(
+                            colorScheme: ColorScheme.light(
+                              primary: Mycolors.blue,
+                              onPrimary: Mycolors.background,
+                              onSurface: Mycolors.darkBlue,
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Mycolors.darkBlue,
+                              ),
                             ),
                           ),
-                        ),
-                        child: child!,
-                      );
-                    },
-                  );
+                          child: child!,
+                        );
+                      },
+                    );
 
-                  if (pickedDate != null) {
-                    // Format tanggal ke DD MMM YYYY
-                    final day = pickedDate.day.toString().padLeft(2, '0');
-                    final monthAbbr = [
-                      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                    ][pickedDate.month - 1];
-                    final year = pickedDate.year.toString();
-                    final formattedDate = '$day $monthAbbr $year';
+                    if (pickedRange != null) {
+                      final format = (DateTime date) {
+                        final day = date.day.toString().padLeft(2, '0');
+                        final monthAbbr = [
+                          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                        ][date.month - 1];
+                        final year = date.year.toString();
+                        return '$day $monthAbbr $year';
+                      };
 
-                    setState(() {
-                      selectedDate = pickedDate;
-                      widget.controller?.text = formattedDate;
-                    });
+                      final formattedStart = format(pickedRange.start);
+                      final formattedEnd = format(pickedRange.end);
+                      final formattedRange = '$formattedStart - $formattedEnd';
 
-                    if (widget.onDateSelected != null) {
-                      widget.onDateSelected!(formattedDate);
+                      setState(() {
+                        widget.controller?.text = formattedRange;
+                      });
+
+                      if (widget.onDateSelected != null) {
+                        widget.onDateSelected!(formattedRange);
+                      }
+                    }
+                  } else {
+                    final DateTime? picked = await showDatePicker(
+                      context: context,
+                      initialDate: selectedDate ?? DateTime.now(),
+                      firstDate: widget.isRiwayat
+                          ? DateTime(1900)
+                          : DateTime.now(),
+                      lastDate: widget.isRiwayat
+                          ? DateTime.now()
+                          : DateTime(2100),
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData(
+                            colorScheme: ColorScheme.light(
+                              primary: Mycolors.blue,
+                              onPrimary: Mycolors.background,
+                              onSurface: Mycolors.darkBlue,
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Mycolors.darkBlue,
+                              ),
+                            ),
+                          ),
+                          child: child!,
+                        );
+                      },
+                    );
+
+                    if (picked != null) {
+                      final format = (DateTime date) {
+                        final day = date.day.toString().padLeft(2, '0');
+                        final monthAbbr = [
+                          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                        ][date.month - 1];
+                        final year = date.year.toString();
+                        return '$day $monthAbbr $year';
+                      };
+
+                      final formattedDate = format(picked);
+
+                      setState(() {
+                        selectedDate = picked;
+                        widget.controller?.text = formattedDate;
+                      });
+
+                      if (widget.onDateSelected != null) {
+                        widget.onDateSelected!(formattedDate);
+                      }
                     }
                   }
                 }

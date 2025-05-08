@@ -197,9 +197,17 @@ class RiwayatReservasiPage extends StatelessWidget {
                       height: 50,
                       borderRadius: 24,
                       isDatePicker: true,
-                      onDateSelected: (formattedDate) {
-                        riwayatReservasiController.filterByDate(formattedDate);
+                      isRangeDatePicker: true,
+                      onDateSelected: (formattedRange) {
+                        final dates = formattedRange.split(' - ');
+                        if (dates.length == 2) {
+                          riwayatReservasiController.setDateRange(
+                            dates[0].trim(),
+                            dates[1].trim(),
+                          );
+                        }
                       },
+
                       textStyle: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w800,
@@ -265,7 +273,9 @@ class RiwayatReservasiPage extends StatelessWidget {
                             riwayatReservasiController.filteredReservations;
                         if (riwayatReservasiController.isLoading.value) {
                           return const Center(
-                            child: CircularProgressIndicator(color: Mycolors.blue,),
+                            child: CircularProgressIndicator(
+                              color: Mycolors.blue,
+                            ),
                           );
                         }
 
