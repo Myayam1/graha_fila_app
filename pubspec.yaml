@@ -70,9 +70,11 @@ flutter:
     - assets/images/logolapangan3.png
     - assets/images/shuttlecock.png
     - assets/images/googlelogo.png
+    - assets/images/pilihdate.png
     - assets/images/grahafilalogo.png
     - assets/images/dataisempty.jpg
     - assets/loadinganimation.json
+    - assets/pilihtanggal.json
 
 
 

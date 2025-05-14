@@ -8,6 +8,7 @@ import 'package:grafil_app/widget/mycolor.dart';
 import 'package:grafil_app/widget/mytext.dart';
 import 'package:grafil_app/widget/mytextfield.dart';
 import 'package:grafil_app/widget/mytimebox.dart';
+import 'package:lottie/lottie.dart';
 
 class AddReservationPage extends StatelessWidget {
   final controller = Get.find<AddReservationController>();
@@ -24,7 +25,7 @@ class AddReservationPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: MyText(
-          text: "Add Reservation",
+          text: "Tambah Reservasi",
           fontSize: 24,
           textcolor: Mycolors.blue,
           fontWeight: FontWeight.w800,
@@ -67,36 +68,6 @@ class AddReservationPage extends StatelessWidget {
                       ],
                     ),
 
-                    SizedBox(height: 16),
-                    MyText(
-                      text: "Jumlah Pembayaran",
-                      fontSize: 16,
-                      textcolor: Mycolors.darkBlue,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    SizedBox(height: 8),
-                    MyTextField(
-                      controller: controller.paymentController,
-                      iconlogo: Icon(Icons.payment, color: Mycolors.darkBlue),
-                      width: double.infinity,
-                      height: 50,
-                      borderRadius: 25,
-                      hintText: "Harga pembayaran",
-                      readOnly: true,
-                      
-                    ),
-
-                    // Spot selector (button group)
-                    SizedBox(height: 16),
-                    MyText(
-                      text: "Pilih Lapangan",
-                      fontSize: 16,
-                      textcolor: Mycolors.darkBlue,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    SizedBox(height: 8),
-                    _buildSpotSelector(),
-
                     // Date field
                     SizedBox(height: 16),
                     GestureDetector(
@@ -119,33 +90,69 @@ class AddReservationPage extends StatelessWidget {
                       ),
                     ),
 
-                    // Time slots section
-                    SizedBox(height: 24),
-                    Center(
-                      child: MyText(
-                        text: "Waktu",
-                        fontSize: 22,
-                        textcolor: Mycolors.blue,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-
+                    // Spot selector (button group)
                     SizedBox(height: 16),
-                    _buildTimeGrid(context),
-
-                    // Add button
-                    SizedBox(height: 24),
-                    Center(
-                      child: MyButton(
-                        text: "Tambah",
-                        onPressed: () => controller.createReservation(),
-                        buttonbackgroundColor: Mycolors.blue,
-                        textColor: Mycolors.white,
-                        width: 150,
-                        height: 45,
-                        borderRadius: 25,
-                      ),
+                    MyText(
+                      text: "Pilih Lapangan",
+                      fontSize: 16,
+                      textcolor: Mycolors.darkBlue,
+                      fontWeight: FontWeight.w800,
                     ),
+                    SizedBox(height: 8),
+                    _buildSpotSelector(),
+
+                    SizedBox(height: 24),
+                    if (controller.selectedDate.value == null)
+                      Center(
+                        child: Lottie.asset(
+                          'assets/pilihtanggal.json',
+                          width: 600,
+                          height: 300,
+                          fit: BoxFit.contain,
+                        ),
+                      )
+                    else ...[
+                      Center(
+                        child: MyText(
+                          text: "Waktu",
+                          fontSize: 22,
+                          textcolor: Mycolors.blue,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      _buildTimeGrid(context),
+
+                      // Jumlah Pembayaran dan Tambah
+                      SizedBox(height: 26),
+                      Obx(
+                        () => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(
+                              text:
+                                  controller.defaultAmount.value == 0
+                                      ? "Rp 0"
+                                      : controller.currencyFormatter.format(
+                                        controller.defaultAmount.value,
+                                      ),
+                              fontSize: 24,
+                              textcolor: Mycolors.blue,
+                              fontWeight: FontWeight.w800,
+                            ),
+                            MyButton(
+                              text: "Tambah",
+                              onPressed: () => controller.createReservation(),
+                              buttonbackgroundColor: Mycolors.blue,
+                              textColor: Mycolors.white,
+                              width: 150,
+                              height: 45,
+                              borderRadius: 25,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                     SizedBox(height: 24),
                   ],
                 ),
@@ -164,7 +171,6 @@ class AddReservationPage extends StatelessWidget {
     );
   }
 
-  // Spot selector with toggle buttons
   Widget _buildSpotSelector() {
     return Obx(
       () => Row(
