@@ -352,15 +352,11 @@ class DashboardReservasiPage extends StatelessWidget {
                             isDatePicker: true,
                             isRangeDatePicker: true,
                             onDateSelected: (formattedRange) {
-                              final dates = formattedRange.split(
-                                ' - ',
-                              ); 
+                              final dates = formattedRange.split(' - ');
                               if (dates.length == 2) {
-                                
                                 reservationController.setDateRange(
-                                  dates[0]
-                                      .trim(),
-                                  dates[1].trim(), 
+                                  dates[0].trim(),
+                                  dates[1].trim(),
                                 );
                               }
                             },
@@ -474,13 +470,81 @@ class DashboardReservasiPage extends StatelessWidget {
                                         const SizedBox(height: 20),
                                 itemBuilder: (context, index) {
                                   final res = filteredList[index];
-                                  return ReservationCard(
-                                    waktu: reservationController
-                                        .formatTimeRange(res.waktu),
-                                    tanggal: res.tanggalFormatted,
-                                    nama: res.nama,
-                                    lapangan: res.lapangan,
-                                    telp: res.telp,
+                                  return GestureDetector(
+                                    onTap: () {
+                                      // Ambil semua reservasi orang tersebut dari list utama
+                                      final personReservations =
+                                          reservationController.reservations
+                                              .where(
+                                                (r) =>
+                                                    r.nama.toLowerCase() ==
+                                                    res.nama.toLowerCase(),
+                                              )
+                                              .toList();
+
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: MyText(
+                                              text: 'Jadwal ${res.nama}',
+                                              fontSize: 18,
+                                              textcolor: Mycolors.blue,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            content: SizedBox(
+                                              width: double.maxFinite,
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount:
+                                                    personReservations.length,
+                                                itemBuilder: (context, i) {
+                                                  final item =
+                                                      personReservations[i];
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          vertical: 4,
+                                                        ),
+                                                    child: MyText(
+                                                      text:
+                                                          '${item.tanggalFormatted} - Lapangan ${item.lapangan} - ${reservationController.formatTimeRange(item.waktu)}',
+                                                      fontSize: 15,
+                                                      textcolor:
+                                                          Mycolors.darkBlue,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed:
+                                                    () =>
+                                                        Navigator.of(
+                                                          context,
+                                                        ).pop(),
+                                                child: const MyText(
+                                                  text: 'Tutup',
+                                                  fontSize: 14,
+                                                  textcolor: Mycolors.blue,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+
+                                    child: ReservationCard(
+                                      waktu: reservationController
+                                          .formatTimeRange(res.waktu),
+                                      tanggal: res.tanggalFormatted,
+                                      nama: res.nama,
+                                      lapangan: res.lapangan,
+                                      telp: res.telp,
+                                    ),
                                   );
                                 },
                               );
