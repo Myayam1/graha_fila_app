@@ -134,10 +134,10 @@ class DashboardReservasiPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: const ImageIcon(
-                                    AssetImage('assets/images/shuttlecock.png'),
-                                    color: Mycolors.blue,
-                                    size: 24,
+                                  child: Image.asset(
+                                    'assets/images/grahafilalogo.png',
+                                    width: 24,
+                                    height: 24,
                                   ),
                                 ),
                                 const SizedBox(width: 16),
