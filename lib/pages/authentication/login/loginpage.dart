@@ -78,16 +78,29 @@ class _LoginPageState extends State<LoginPage> {
                         controller: loginController.emailController,
                       ),
                       const SizedBox(height: 20),
-                      MyTextField(
-                        hintText: "Password",
-                        obscureText: true,
-                        iconlogo: const Icon(Icons.lock),
-                        width: double.infinity,
-                        height: 50,
-                        borderRadius: 24,
-                        textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                        controller: loginController.passwordController,
+                      Obx(
+                        () => MyTextField(
+                          hintText: "Password",
+                          obscureText: loginController.isObscure.value,
+                          iconlogo: const Icon(Icons.lock),
+                          width: double.infinity,
+                          height: 50,
+                          borderRadius: 24,
+                          textStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          controller: loginController.passwordController,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              loginController.isObscure.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: loginController.toggleObscure,
+                          ),
+                        ),
                       ),
+
                       const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
@@ -140,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.w700,
                               onTap: () {
                                 Get.toNamed(AppRoutes.loading);
-          
+
                                 Future.delayed(const Duration(seconds: 1), () {
                                   Get.offNamed(AppRoutes.register);
                                 });

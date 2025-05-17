@@ -50,7 +50,7 @@ class PaymentController extends GetxController {
       Get.snackbar(
         'Error',
         'Gagal memuat data pendapatan hari ini',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP, 
       );
     } finally {
       isLoading(false);
