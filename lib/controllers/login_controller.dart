@@ -9,8 +9,12 @@ import '../routes/app_route.dart';
 class LoginController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
+  var isObscure = true.obs;
   var isLoading = false.obs;
+
+  void toggleObscure() {
+    isObscure.value = !isObscure.value;
+  }
 
   void autoFillLogin() {
     emailController.text = "";
@@ -37,7 +41,7 @@ class LoginController extends GetxController {
 
     final loginData = LoginModel(email: email, password: password);
 
-    isLoading.value = true; 
+    isLoading.value = true;
 
     try {
       final response = await LoginService.login(loginData);
@@ -56,14 +60,16 @@ class LoginController extends GetxController {
         Get.offAllNamed(AppRoutes.dashboardReservasi);
       } else {
         final error = json.decode(response.body);
-        Get.snackbar('Login Gagal', error['message'] ?? 'Cek kembali email dan password');
+        Get.snackbar(
+          'Login Gagal',
+          error['message'] ?? 'Cek kembali email dan password',
+        );
       }
     } catch (e) {
       Get.snackbar('Error', 'Tidak dapat terhubung ke server');
       print('Exception: $e');
     } finally {
-      isLoading.value = false; 
+      isLoading.value = false;
     }
   }
 }
-
